@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Антиплагиат — Кабинет студента</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-accent: #216CFF;
+      --color-accent-hover: #1A55D4;
+      --color-accent-click: #1A3FA0;
+      --color-accent-disabled: #A0BEFF;
+      --color-accent-subtle: #EBF1FD;
+      --color-text-primary: #3C3C3C;
+      --color-text-secondary: #6B6B6B;
+      --color-text-disabled: #BDBDBD;
+      --color-border-default: #E3E3E0;
+      --color-border-hover: #A8C4FA;
+      --color-border-active: #2F6FED;
+      --color-bg-base: #FFFFFF;
+      --color-bg-surface: #F7F7F5;
+      --color-bg-hover: #F0F0EE;
+      --color-bg-active: #EBF1FD;
+      --color-error: #EC0000;
+      --color-error-subtle: #FDECEA;
+      --color-success: #2E7D32;
+      --color-success-subtle: #E8F5E9;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--color-bg-surface);
+      color: var(--color-text-primary);
+      min-height: 100vh;
+    }
+
+    /* ─── SCREENS ─────────────────────────────────────── */
+    .screen { display: none; flex-direction: column; min-height: 100vh; }
+    .screen.active { display: flex; }
+
+    /* ─── HEADER ──────────────────────────────────────── */
+    .header {
+      background: var(--color-bg-base);
+      border-bottom: 1px solid var(--color-border-default);
+      height: 64px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .logo-icon {
+      width: 24px;
+      height: 30px;
+      background: var(--color-accent);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.5px;
+    }
+
+    .header-brand {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 24px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-email {
+      font-size: 14px;
+      color: var(--color-text-primary);
+      line-height: 20px;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--color-border-default);
+    }
+
+    .header-role {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      line-height: 20px;
+    }
+
+    .btn-logout {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 8px;
+      line-height: 20px;
+      transition: background 0.15s;
+    }
+    .btn-logout:hover { background: var(--color-bg-hover); }
+    .btn-logout:active { background: var(--color-bg-active); }
+
+    /* ─── MAIN ────────────────────────────────────────── */
+    .main {
+      flex: 1;
+      padding: 32px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ─── TITLE ROW ───────────────────────────────────── */
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 32px;
+      letter-spacing: -0.5px;
+    }
+
+    .view-switcher {
+      background: var(--color-bg-base);
+      border: 1px solid var(--color-border-default);
+      border-radius: 12px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .view-btn {
+      width: 36px;
+      height: 32px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      transition: background 0.15s;
+    }
+    .view-btn.active { background: var(--color-accent); }
+    .view-btn:not(.active):hover { background: var(--color-bg-hover); }
+
+    .grid-icon, .list-icon {
+      display: grid;
+      gap: 2px;
+    }
+    .grid-icon { grid-template-columns: 7px 7px; }
+    .grid-icon span {
+      width: 7px; height: 7px;
+      border-radius: 2px;
+    }
+    .view-btn.active .grid-icon span { background: white; }
+    .view-btn:not(.active) .grid-icon span { background: var(--color-text-secondary); }
+
+    .list-icon { grid-template-columns: 1fr; gap: 4px; }
+    .list-icon span {
+      width: 16px; height: 2px;
+      border-radius: 1px;
+      background: var(--color-text-secondary);
+    }
+
+    /* ─── CARD GRID ───────────────────────────────────── */
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--color-bg-base);
+      border: 1px solid var(--color-border-default);
+      border-radius: 16px;
+      padding: 20px 24px;
+      flex: 1 0 0;
+      min-width: 520px;
+      max-width: 600px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border-color: var(--color-border-hover);
+      transform: translateY(-1px);
+    }
+    .card:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+
+    .card-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 24px;
+      flex: 1;
+    }
+
+    .more-btn {
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-text-secondary);
+      font-size: 16px;
+      letter-spacing: 1px;
+      transition: background 0.15s;
+    }
+    .more-btn:hover { background: var(--color-bg-hover); }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 16px;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    .status-badge.checking {
+      background: var(--color-accent-subtle);
+      color: var(--color-accent);
+    }
+    .status-badge.done {
+      background: var(--color-success-subtle);
+      color: var(--color-success);
+    }
+    .status-badge.error {
+      background: var(--color-error-subtle);
+      color: var(--color-error);
+    }
+
+    .card-version {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      line-height: 16px;
+      letter-spacing: 0.2px;
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-info-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .info-label {
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+    }
+    .info-value {
+      font-weight: 500;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    .footer {
+      background: var(--color-bg-base);
+      border-top: 1px solid var(--color-border-default);
+      padding: 25px 80px 24px;
+      flex-shrink: 0;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a, .footer-link {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      line-height: 20px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover, .footer-link:hover { color: var(--color-text-primary); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 16px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-btn {
+      width: 28px;
+      height: 28px;
+      background: var(--color-bg-hover);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .social-btn:hover { background: var(--color-border-default); }
+
+    /* ─── EDITOR SCREEN ───────────────────────────────── */
+    #screen-editor .header { position: sticky; top: 0; z-index: 10; }
+
+    .editor-toolbar {
+      background: var(--color-bg-base);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 0 40px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-accent);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background 0.15s;
+      line-height: 20px;
+    }
+    .back-btn:hover { background: var(--color-accent-subtle); }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--color-border-default);
+    }
+
+    .toolbar-doc-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s;
+      line-height: 20px;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-primary {
+      background: var(--color-accent);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--color-accent-hover); }
+    .btn-primary:active { background: var(--color-accent-click); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border-default);
+    }
+    .btn-secondary:hover { background: var(--color-bg-hover); }
+
+    .editor-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    .editor-canvas {
+      flex: 1;
+      padding: 60px;
+      overflow-y: auto;
+      background: var(--color-bg-surface);
+      display: flex;
+      justify-content: center;
+    }
+
+    .editor-page {
+      background: white;
+      width: 794px;
+      min-height: 1123px;
+      border-radius: 4px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 80px;
+    }
+
+    .editor-page-content {
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--color-text-secondary);
+      border: 2px dashed var(--color-border-default);
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .editor-doc-title-input {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      border: none;
+      outline: none;
+      width: 100%;
+      margin-bottom: 32px;
+      line-height: 28px;
+      font-family: 'Inter', sans-serif;
+    }
+    .editor-doc-title-input::placeholder { color: var(--color-text-disabled); }
+
+    .editor-placeholder-hint {
+      font-size: 16px;
+      color: var(--color-text-disabled);
+      margin-bottom: 8px;
+    }
+    .editor-placeholder-sub {
+      font-size: 13px;
+      color: var(--color-text-disabled);
+    }
+
+    .editor-sidebar {
+      width: 280px;
+      border-left: 1px solid var(--color-border-default);
+      background: var(--color-bg-base);
+      padding: 20px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-section-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border-default);
+      font-size: 13px;
+    }
+    .sidebar-info-row:last-child { border-bottom: none; }
+    .sidebar-info-label { color: var(--color-text-secondary); }
+    .sidebar-info-value { color: var(--color-text-primary); font-weight: 500; }
+
+    /* ─── TRANSITION ──────────────────────────────────── */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .screen.active { animation: fadeIn 0.2s ease; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     SCREEN 1: Кабинет студента
+══════════════════════════════════════════════════════ -->
+<div id="screen-cabinet" class="screen active">
+
+  <header class="header">
+    <div class="header-left" onclick="goTo('cabinet')">
+      <div class="logo-icon">АП</div>
+      <span class="header-brand">Антиплагиат</span>
+    </div>
+    <div class="header-right">
+      <span class="header-email">student@university.ru</span>
+      <div class="header-divider"></div>
+      <span class="header-role">Студент</span>
+      <div class="header-divider"></div>
+      <button class="btn-logout">Выйти</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="title-row">
+      <h1 class="page-title">Кабинет студента</h1>
+      <div class="view-switcher">
+        <button class="view-btn active" title="Сетка">
+          <div class="grid-icon">
+            <span></span><span></span>
+            <span></span><span></span>
+          </div>
+        </button>
+        <button class="view-btn" title="Список">
+          <div class="list-icon">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="card-grid" id="cardGrid">
+
+      <div class="card" onclick="openEditor('Курсовая работа — Анализ данных', 'Иванов И.И.', '09.04.2026', 'Проверяется', '3')">
+        <div class="card-top-row">
+          <p class="card-title">Курсовая работа — Анализ данных</p>
+          <button class="more-btn" onclick="event.stopPropagation()">···</button>
+        </div>
+        <div class="card-meta">
+          <span class="status-badge checking">Проверяется</span>
+          <span class="card-version">Версия 3</span>
+        </div>
+        <div class="card-info">
+          <div class="card-info-row">
+            <span class="info-label">Преподаватель:</span>
+            <span class="info-value">Иванов И.И.</span>
+          </div>
+          <div class="card-info-row">
+            <span class="info-label">Дата создания:</span>
+            <span class="info-value">09.04.2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" onclick="openEditor('Дипломная работа — Машинное обучение', 'Петров А.С.', '05.04.2026', 'Завершено', '1')">
+        <div class="card-top-row">
+          <p class="card-title">Дипломная работа — Машинное обучение</p>
+          <button class="more-btn" onclick="event.stopPropagation()">···</button>
+        </div>
+        <div class="card-meta">
+          <span class="status-badge done">Завершено</span>
+          <span class="card-version">Версия 1</span>
+        </div>
+        <div class="card-info">
+          <div class="card-info-row">
+            <span class="info-label">Преподаватель:</span>
+            <span class="info-value">Петров А.С.</span>
+          </div>
+          <div class="card-info-row">
+            <span class="info-label">Дата создания:</span>
+            <span class="info-value">05.04.2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" onclick="openEditor('Реферат — История ИИ', 'Сидорова Е.В.', '01.04.2026', 'Ошибка', '2')">
+        <div class="card-top-row">
+          <p class="card-title">Реферат — История ИИ</p>
+          <button class="more-btn" onclick="event.stopPropagation()">···</button>
+        </div>
+        <div class="card-meta">
+          <span class="status-badge error">Ошибка</span>
+          <span class="card-version">Версия 2</span>
+        </div>
+        <div class="card-info">
+          <div class="card-info-row">
+            <span class="info-label">Преподаватель:</span>
+            <span class="info-value">Сидорова Е.В.</span>
+          </div>
+          <div class="card-info-row">
+            <span class="info-label">Дата создания:</span>
+            <span class="info-value">01.04.2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" onclick="openEditor('Лабораторная — Статистика', 'Козлов Д.А.', '28.03.2026', 'Завершено', '1')">
+        <div class="card-top-row">
+          <p class="card-title">Лабораторная — Статистика</p>
+          <button class="more-btn" onclick="event.stopPropagation()">···</button>
+        </div>
+        <div class="card-meta">
+          <span class="status-badge done">Завершено</span>
+          <span class="card-version">Версия 1</span>
+        </div>
+        <div class="card-info">
+          <div class="card-info-row">
+            <span class="info-label">Преподаватель:</span>
+            <span class="info-value">Козлов Д.А.</span>
+          </div>
+          <div class="card-info-row">
+            <span class="info-label">Дата создания:</span>
+            <span class="info-value">28.03.2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" onclick="openEditor('Эссе — Этика в технологиях', 'Морозова Н.К.', '25.03.2026', 'Проверяется', '1')">
+        <div class="card-top-row">
+          <p class="card-title">Эссе — Этика в технологиях</p>
+          <button class="more-btn" onclick="event.stopPropagation()">···</button>
+        </div>
+        <div class="card-meta">
+          <span class="status-badge checking">Проверяется</span>
+          <span class="card-version">Версия 1</span>
+        </div>
+        <div class="card-info">
+          <div class="card-info-row">
+            <span class="info-label">Преподаватель:</span>
+            <span class="info-value">Морозова Н.К.</span>
+          </div>
+          <div class="card-info-row">
+            <span class="info-label">Дата создания:</span>
+            <span class="info-value">25.03.2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" onclick="openEditor('Курсовая работа — Базы данных', 'Волков Р.О.', '20.03.2026', 'Завершено', '4')">
+        <div class="card-top-row">
+          <p class="card-title">Курсовая работа — Базы данных</p>
+          <button class="more-btn" onclick="event.stopPropagation()">···</button>
+        </div>
+        <div class="card-meta">
+          <span class="status-badge done">Завершено</span>
+          <span class="card-version">Версия 4</span>
+        </div>
+        <div class="card-info">
+          <div class="card-info-row">
+            <span class="info-label">Преподаватель:</span>
+            <span class="info-value">Волков Р.О.</span>
+          </div>
+          <div class="card-info-row">
+            <span class="info-label">Дата создания:</span>
+            <span class="info-value">20.03.2026</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-bottom">
+      <div class="footer-links">
+        <a href="#">Помощь</a>
+        <a href="#">Контакты</a>
+        <a href="#">Пользовательское соглашение</a>
+        <a href="#">Соглашение о персональных данных</a>
+        <a href="#">Маркетплейс</a>
+      </div>
+      <span class="footer-copy">АО «Антиплагиат» 2005–2026 © Все права защищены</span>
+      <div class="social-icons">
+        <div class="social-btn">TG</div>
+        <div class="social-btn">VK</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SCREEN 2: Редактор
+══════════════════════════════════════════════════════ -->
+<div id="screen-editor" class="screen">
+
+  <header class="header">
+    <div class="header-left" onclick="goTo('cabinet')">
+      <div class="logo-icon">АП</div>
+      <span class="header-brand">Антиплагиат</span>
+    </div>
+    <div class="header-right">
+      <span class="header-email">student@university.ru</span>
+      <div class="header-divider"></div>
+      <span class="header-role">Студент</span>
+      <div class="header-divider"></div>
+      <button class="btn-logout">Выйти</button>
+    </div>
+  </header>
+
+  <div class="editor-toolbar">
+    <div class="toolbar-left">
+      <button class="back-btn" onclick="goTo('cabinet')">← Мои работы</button>
+      <div class="toolbar-divider"></div>
+      <span class="toolbar-doc-title" id="editorDocTitle">—</span>
+    </div>
+    <div class="toolbar-right">
+      <button class="btn btn-secondary">Сохранить</button>
+      <button class="btn btn-primary">Проверить</button>
+    </div>
+  </div>
+
+  <div class="editor-body">
+    <div class="editor-canvas">
+      <div class="editor-page">
+        <input class="editor-doc-title-input" id="editorTitleInput" placeholder="Название работы..." />
+        <div class="editor-page-content">
+          <p class="editor-placeholder-hint">Начните вводить текст работы</p>
+          <p class="editor-placeholder-sub">Это заглушка редактора. В финальном продукте здесь будет полноценный текстовый редактор.</p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="editor-sidebar">
+      <p class="sidebar-section-title">Информация</p>
+      <div class="sidebar-info-row">
+        <span class="sidebar-info-label">Статус</span>
+        <span class="sidebar-info-value" id="sidebarStatus">—</span>
+      </div>
+      <div class="sidebar-info-row">
+        <span class="sidebar-info-label">Версия</span>
+        <span class="sidebar-info-value" id="sidebarVersion">—</span>
+      </div>
+      <div class="sidebar-info-row">
+        <span class="sidebar-info-label">Преподаватель</span>
+        <span class="sidebar-info-value" id="sidebarTeacher">—</span>
+      </div>
+      <div class="sidebar-info-row">
+        <span class="sidebar-info-label">Создан</span>
+        <span class="sidebar-info-value" id="sidebarDate">—</span>
+      </div>
+    </aside>
+  </div>
+
+</div>
+
+
+<script>
+  // ─── Navigation ────────────────────────────────────
+  function goTo(screenName) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + screenName).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ─── Open editor with card data ────────────────────
+  function openEditor(title, teacher, date, status, version) {
+    document.getElementById('editorDocTitle').textContent = title;
+    document.getElementById('editorTitleInput').value = title;
+    document.getElementById('sidebarTeacher').textContent = teacher;
+    document.getElementById('sidebarDate').textContent = date;
+    document.getElementById('sidebarVersion').textContent = 'Версия ' + version;
+
+    const statusEl = document.getElementById('sidebarStatus');
+    statusEl.textContent = status;
+    statusEl.style.color = status === 'Завершено'
+      ? 'var(--color-success)'
+      : status === 'Ошибка'
+        ? 'var(--color-error)'
+        : 'var(--color-accent)';
+
+    goTo('editor');
+  }
+</script>
+</body>
+</html>
