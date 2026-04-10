@@ -6,7 +6,7 @@
   <title>Антиплагиат — Кабинет студента</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -108,13 +108,12 @@
     /* ─── CARD GRID ─── */
     .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     .card-grid.hidden { display: none; }
-    .card { background: var(--color-bg-base); border: 1px solid var(--color-border-default); border-radius: 16px; padding: 20px 24px; min-width: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer; display: flex; flex-direction: column; gap: 12px; transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s; }
+    .card { background: var(--color-bg-base); border: 1px solid var(--color-border-default); border-radius: 16px; padding: 20px 24px; min-width: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer; display: flex; flex-direction: column; gap: 0; transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s; min-height: 160px; }
     .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--color-border-hover); transform: translateY(-1px); }
     .card:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .card-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .card-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; flex: 1; }
     .card-title { font-size: 18px; font-weight: 600; color: var(--color-text-primary); line-height: 24px; flex: 1; }
-    .more-btn { width: 24px; height: 24px; background: transparent; border: none; cursor: pointer; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-text-secondary); font-size: 16px; letter-spacing: 1px; transition: background 0.15s; }
-    .more-btn:hover { background: var(--color-bg-hover); }
+    .card-bottom { display: flex; flex-direction: column; gap: 8px; padding-top: 12px; }
     .card-meta { display: flex; align-items: center; gap: 8px; }
     .status-badge { padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; line-height: 16px; white-space: nowrap; }
     .status-badge.checking { background: var(--color-accent-subtle); color: var(--color-accent); }
@@ -225,10 +224,10 @@
     .tb-select-trigger span { flex: 1; }
     .tb-select-trigger svg { opacity: 0.5; flex-shrink: 0; }
     .tb-dropdown {
-      position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%;
+      position: fixed; min-width: 100%;
       background: white; border: 1px solid var(--color-border-default);
       border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      z-index: 200; display: none; padding: 4px;
+      z-index: 2000; display: none; padding: 4px;
     }
     .tb-dropdown.open { display: block; }
     .tb-dropdown-item {
@@ -237,6 +236,7 @@
     }
     .tb-dropdown-item:hover { background: var(--color-bg-hover); }
     .tb-dropdown-item.active { background: var(--color-bg-active); color: var(--color-accent); }
+    .dd-sep { height: 1px; background: var(--color-border-default); margin: 4px 0; }
 
     /* Font size & line spacing inputs */
     .tb-num-input {
@@ -275,12 +275,70 @@
     .ed-main { flex: 1; display: flex; overflow: hidden; min-height: 0; }
 
     /* Document canvas */
-    .doc-canvas { flex: 1; overflow-y: auto; padding: 24px 40px 60px; display: flex; justify-content: center; background: var(--color-bg-surface); min-width: 0; }
+    .doc-canvas {
+      flex: 1; display: flex; justify-content: center;
+      background: var(--color-bg-surface); min-width: 0;
+      overflow: hidden; position: relative;
+    }
+
+    /* Scrollable pages wrapper — native scrollbar hidden, custom one used instead */
+    .doc-scroll-area {
+      flex: 1;
+      overflow-y: scroll; overflow-x: hidden;
+      padding: 24px 32px 60px 40px;
+      display: flex; flex-direction: column; align-items: center; gap: 24px;
+      scrollbar-width: none;
+    }
+    .doc-scroll-area::-webkit-scrollbar { display: none; }
+
+    /* Custom fixed scrollbar — always 24px right of the page */
+    .doc-custom-scrollbar {
+      position: fixed;
+      width: 8px;
+      border-radius: 4px;
+      background: transparent;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .doc-custom-scrollbar-thumb {
+      position: absolute;
+      left: 0; right: 0;
+      background: rgba(60,60,60,0.3);
+      border-radius: 4px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: background 0.15s;
+    }
+    .doc-custom-scrollbar-thumb:hover { background: rgba(60,60,60,0.5); }
+    .doc-custom-scrollbar-btn {
+      position: absolute;
+      left: 0; right: 0; height: 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; pointer-events: auto;
+      opacity: 0.4;
+    }
+    .doc-custom-scrollbar-btn:hover { opacity: 0.7; }
+    .doc-custom-scrollbar-btn.up { top: 0; }
+    .doc-custom-scrollbar-btn.down { bottom: 0; }
+
     .doc-page {
       background: white; width: 794px; height: 1123px;
       border-radius: 8px; box-shadow: 0 2px 16px rgba(0,0,0,0.08);
       padding: 56px 64px; flex-shrink: 0; position: relative; overflow: hidden;
     }
+
+    /* Page indicator tooltip */
+    .page-indicator {
+      position: fixed;
+      background: rgba(60,60,60,0.65);
+      color: white;
+      font-size: 12px; font-weight: 500;
+      padding: 5px 10px; border-radius: 8px;
+      pointer-events: none;
+      opacity: 0; transition: opacity 0.2s ease;
+      white-space: nowrap; z-index: 100;
+    }
+    .page-indicator.visible { opacity: 1; }
 
     /* AI suggestion chips inside empty page */
     .doc-suggestion-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
@@ -297,12 +355,12 @@
       outline: none; min-height: 800px; font-size: 14px; line-height: 1.6;
       color: var(--color-text-primary); font-family: 'Times New Roman', Times, serif;
     }
-    #editorContent:empty:before { content: attr(data-placeholder); color: var(--color-text-disabled); pointer-events: none; }
-    #editorContent h1 { font-size: 24px; font-weight: 700; margin: 16px 0 8px; line-height: 1.3; }
-    #editorContent h2 { font-size: 20px; font-weight: 700; margin: 14px 0 6px; line-height: 1.3; }
-    #editorContent h3 { font-size: 17px; font-weight: 700; margin: 12px 0 6px; line-height: 1.3; }
-    #editorContent h4 { font-size: 15px; font-weight: 600; margin: 10px 0 4px; line-height: 1.3; }
-    #editorContent h5 { font-size: 14px; font-weight: 600; margin: 10px 0 4px; line-height: 1.3; font-style: italic; }
+    #editorContent.show-placeholder:before { content: attr(data-placeholder); color: var(--color-text-disabled); pointer-events: none; display: block; }
+    #editorContent h1 { font-size: 28px; font-weight: 700; margin: 20px 0 10px; line-height: 1.25; }
+    #editorContent h2 { font-size: 22px; font-weight: 700; margin: 16px 0 8px; line-height: 1.3; }
+    #editorContent h3 { font-size: 18px; font-weight: 700; margin: 14px 0 6px; line-height: 1.3; }
+    #editorContent h4 { font-size: 15px; font-weight: 600; margin: 10px 0 4px; line-height: 1.35; }
+    #editorContent h5 { font-size: 14px; font-weight: 600; margin: 10px 0 4px; line-height: 1.35; font-style: italic; color: var(--color-text-secondary); }
     #editorContent p { margin: 0 0 8px; }
     #editorContent ul, #editorContent ol { padding-left: 28px; margin: 8px 0; }
     #editorContent li { margin: 4px 0; }
@@ -348,7 +406,7 @@
     .ai-input-row input::placeholder { color: var(--color-text-disabled); }
     .ai-send-btn { color: var(--color-accent); font-size: 18px; cursor: pointer; border: none; background: transparent; }
 
-    /* Right toggle strip — sits in normal flex flow between canvas and AI panel */
+    /* Right toggle strip */
     .right-toggle {
       flex-shrink: 0;
       display: flex; flex-direction: column; justify-content: center; gap: 2px;
@@ -360,9 +418,7 @@
       align-self: center;
       transition: width 0.25s ease;
     }
-    /* AI open: icon-only strip */
     .right-toggle.ai-open { width: 48px; }
-    /* AI closed: strip with labels */
     .right-toggle.ai-closed { width: 164px; }
 
     .toggle-row {
@@ -388,6 +444,23 @@
 
     /* Format painter cursor */
     .format-painter-mode { cursor: crosshair !important; }
+
+    /* ─── Image resize ─── */
+    .img-wrap {
+      display: inline-block; position: relative; line-height: 0;
+      user-select: none;
+    }
+    .img-wrap img { display: block; max-width: 100%; }
+    .img-wrap.selected img { outline: 2px solid var(--color-accent); }
+    .img-handle {
+      position: absolute; width: 10px; height: 10px;
+      background: white; border: 2px solid var(--color-accent);
+      border-radius: 2px; z-index: 10;
+    }
+    .img-handle[data-pos="nw"] { top: -5px;  left: -5px;  cursor: nw-resize; }
+    .img-handle[data-pos="ne"] { top: -5px;  right: -5px; cursor: ne-resize; }
+    .img-handle[data-pos="sw"] { bottom: -5px; left: -5px;  cursor: sw-resize; }
+    .img-handle[data-pos="se"] { bottom: -5px; right: -5px; cursor: se-resize; }
   </style>
 </head>
 <body>
@@ -490,34 +563,28 @@
     <!-- CARD GRID VIEW (hidden by default) -->
     <div class="card-grid hidden" id="cardGrid">
       <div class="card" onclick="openEditor('Курсовая работа — Анализ данных','Иванов И.И.','09.04.2026','Проверяется','3')">
-        <div class="card-top-row"><p class="card-title">Курсовая работа — Анализ данных</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
-        <div class="card-meta"><span class="status-badge checking">Проверяется</span><span class="card-version">Версия 3</span></div>
-        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Иванов И.И.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">09.04.2026</span></div></div>
+        <div class="card-top-row"><p class="card-title">Курсовая работа — Анализ данных</p></div>
+        <div class="card-bottom"><div class="card-meta"><span class="status-badge checking">Проверяется</span><span class="card-version">Версия 3</span></div><div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Иванов И.И.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">09.04.2026</span></div></div></div>
       </div>
       <div class="card" onclick="openEditor('Дипломная работа — Машинное обучение','Петров А.С.','05.04.2026','Завершено','1')">
-        <div class="card-top-row"><p class="card-title">Дипломная работа — Машинное обучение</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
-        <div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 1</span></div>
-        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Петров А.С.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">05.04.2026</span></div></div>
+        <div class="card-top-row"><p class="card-title">Дипломная работа — Машинное обучение</p></div>
+        <div class="card-bottom"><div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 1</span></div><div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Петров А.С.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">05.04.2026</span></div></div></div>
       </div>
       <div class="card" onclick="openEditor('Реферат — История ИИ','Сидорова Е.В.','01.04.2026','Отправлено на доработку','2')">
-        <div class="card-top-row"><p class="card-title">Реферат — История ИИ</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
-        <div class="card-meta"><span class="status-badge rework">Отправлено на доработку</span><span class="card-version">Версия 2</span></div>
-        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Сидорова Е.В.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">01.04.2026</span></div></div>
+        <div class="card-top-row"><p class="card-title">Реферат — История ИИ</p></div>
+        <div class="card-bottom"><div class="card-meta"><span class="status-badge rework">Отправлено на доработку</span><span class="card-version">Версия 2</span></div><div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Сидорова Е.В.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">01.04.2026</span></div></div></div>
       </div>
       <div class="card" onclick="openEditor('Лабораторная — Статистика','Козлов Д.А.','28.03.2026','Завершено','1')">
-        <div class="card-top-row"><p class="card-title">Лабораторная — Статистика</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
-        <div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 1</span></div>
-        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Козлов Д.А.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">28.03.2026</span></div></div>
+        <div class="card-top-row"><p class="card-title">Лабораторная — Статистика</p></div>
+        <div class="card-bottom"><div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 1</span></div><div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Козлов Д.А.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">28.03.2026</span></div></div></div>
       </div>
       <div class="card" onclick="openEditor('Эссе — Этика в технологиях','Морозова Н.К.','25.03.2026','Проверяется','1')">
-        <div class="card-top-row"><p class="card-title">Эссе — Этика в технологиях</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
-        <div class="card-meta"><span class="status-badge checking">Проверяется</span><span class="card-version">Версия 1</span></div>
-        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Морозова Н.К.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">25.03.2026</span></div></div>
+        <div class="card-top-row"><p class="card-title">Эссе — Этика в технологиях</p></div>
+        <div class="card-bottom"><div class="card-meta"><span class="status-badge checking">Проверяется</span><span class="card-version">Версия 1</span></div><div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Морозова Н.К.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">25.03.2026</span></div></div></div>
       </div>
       <div class="card" onclick="openEditor('Курсовая работа — Базы данных','Волков Р.О.','20.03.2026','Завершено','4')">
-        <div class="card-top-row"><p class="card-title">Курсовая работа — Базы данных</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
-        <div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 4</span></div>
-        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Волков Р.О.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">20.03.2026</span></div></div>
+        <div class="card-top-row"><p class="card-title">Курсовая работа — Базы данных</p></div>
+        <div class="card-bottom"><div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 4</span></div><div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Волков Р.О.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">20.03.2026</span></div></div></div>
       </div>
     </div>
   </main>
@@ -568,7 +635,7 @@
       <div class="ed-header-divider"></div>
       <!-- Version selector -->
       <div class="tb-select-wrap">
-        <button class="ed-btn ed-btn-version" onclick="toggleDropdown('versionDropdown')">
+        <button class="ed-btn ed-btn-version" onclick="toggleDropdown('versionDropdown',event)">
           <span id="versionLabel">Версия 1</span>
           <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#3C3C3C" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
@@ -644,17 +711,17 @@
 
       <!-- Heading type -->
       <div class="tb-select-wrap">
-        <div class="tb-select-trigger" id="headingTrigger" onclick="toggleDropdown('headingDropdown')" style="width:148px;">
+        <div class="tb-select-trigger" id="headingTrigger" onclick="toggleDropdown('headingDropdown',event)" style="width:160px;">
           <span id="headingLabel">Обычный текст</span>
           <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/></svg>
         </div>
-        <div class="tb-dropdown" id="headingDropdown" style="width:200px;">
-          <div class="tb-dropdown-item" style="font-size:20px;font-weight:700;" onclick="setHeading('h1','Основной заголовок')">Основной заголовок</div>
-          <div class="tb-dropdown-item" style="font-size:17px;font-weight:700;" onclick="setHeading('h2','Заголовок 1')">Заголовок 1</div>
-          <div class="tb-dropdown-item" style="font-size:15px;font-weight:700;" onclick="setHeading('h3','Заголовок 2')">Заголовок 2</div>
-          <div class="tb-dropdown-item" style="font-size:13px;font-weight:700;" onclick="setHeading('h4','Заголовок 3')">Заголовок 3</div>
-          <div class="tb-dropdown-item" style="font-style:italic;" onclick="setHeading('h5','Подзаголовок')">Подзаголовок</div>
-          <div class="tb-dropdown-item active" onclick="setHeading('p','Обычный текст')">Обычный текст</div>
+        <div class="tb-dropdown" id="headingDropdown" style="width:220px;">
+          <div class="tb-dropdown-item" style="font-size:17px;font-weight:700;line-height:1.4;" onclick="setHeading('h1','Основной заголовок')">Основной заголовок</div>
+          <div class="tb-dropdown-item" style="font-size:15px;font-weight:700;" onclick="setHeading('h2','Заголовок 1')">Заголовок 1</div>
+          <div class="tb-dropdown-item" style="font-size:13px;font-weight:700;" onclick="setHeading('h3','Заголовок 2')">Заголовок 2</div>
+          <div class="tb-dropdown-item" style="font-size:12px;font-weight:600;" onclick="setHeading('h4','Заголовок 3')">Заголовок 3</div>
+          <div class="tb-dropdown-item" style="font-size:12px;font-style:italic;color:#6B6B6B;" onclick="setHeading('h5','Подзаголовок')">Подзаголовок</div>
+          <div class="tb-dropdown-item active" style="font-size:12px;" onclick="setHeading('p','Обычный текст')">Обычный текст</div>
         </div>
       </div>
 
@@ -662,27 +729,70 @@
 
       <!-- Font family -->
       <div class="tb-select-wrap">
-        <div class="tb-select-trigger" id="fontFamilyTrigger" onclick="toggleDropdown('fontFamilyDropdown')" style="width:116px;">
+        <div class="tb-select-trigger" id="fontFamilyTrigger" onclick="toggleDropdown('fontFamilyDropdown',event)" style="width:130px;">
           <span id="fontFamilyLabel">Times NR</span>
           <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/></svg>
         </div>
-        <div class="tb-dropdown" id="fontFamilyDropdown" style="width:200px;">
-          <div class="tb-dropdown-item active" style="font-family:'Times New Roman',serif" onclick="setFontFamily('Times New Roman','Times NR')">Times New Roman</div>
-          <div class="tb-dropdown-item" style="font-family:Arial,sans-serif" onclick="setFontFamily('Arial','Arial')">Arial</div>
-          <div class="tb-dropdown-item" style="font-family:'Courier New',monospace" onclick="setFontFamily('Courier New','Courier New')">Courier New</div>
-          <div class="tb-dropdown-item" style="font-family:Georgia,serif" onclick="setFontFamily('Georgia','Georgia')">Georgia</div>
-          <div class="tb-dropdown-item" style="font-family:Verdana,sans-serif" onclick="setFontFamily('Verdana','Verdana')">Verdana</div>
-          <div class="tb-dropdown-item" style="font-family:'Inter',sans-serif" onclick="setFontFamily('Inter','Inter')">Inter</div>
+        <div class="tb-dropdown" id="fontFamilyDropdown" style="width:220px;">
+          <div class="tb-dropdown-item active" style="font-family:'Times New Roman',serif;font-size:16px;" onclick="setFontFamily('Times New Roman','Times NR')">Times New Roman</div>
+          <div class="tb-dropdown-item" style="font-family:'Georgia',serif;font-size:16px;" onclick="setFontFamily('Georgia','Georgia')">Georgia</div>
+          <div class="tb-dropdown-item" style="font-family:'Playfair Display',serif;font-size:16px;" onclick="setFontFamily('Playfair Display','Playfair Display')">Playfair Display</div>
+          <div class="tb-dropdown-item" style="font-family:'Lora',serif;font-size:16px;" onclick="setFontFamily('Lora','Lora')">Lora</div>
+          <div class="dd-sep"></div>
+          <div class="tb-dropdown-item" style="font-family:'Inter',sans-serif;font-size:16px;" onclick="setFontFamily('Inter','Inter')">Inter</div>
+          <div class="tb-dropdown-item" style="font-family:'Roboto',sans-serif;font-size:16px;" onclick="setFontFamily('Roboto','Roboto')">Roboto</div>
+          <div class="tb-dropdown-item" style="font-family:'Open Sans',sans-serif;font-size:16px;" onclick="setFontFamily('Open Sans','Open Sans')">Open Sans</div>
+          <div class="tb-dropdown-item" style="font-family:'Montserrat',sans-serif;font-size:16px;" onclick="setFontFamily('Montserrat','Montserrat')">Montserrat</div>
+          <div class="tb-dropdown-item" style="font-family:Arial,sans-serif;font-size:16px;" onclick="setFontFamily('Arial','Arial')">Arial</div>
+          <div class="tb-dropdown-item" style="font-family:Verdana,sans-serif;font-size:16px;" onclick="setFontFamily('Verdana','Verdana')">Verdana</div>
+          <div class="dd-sep"></div>
+          <div class="tb-dropdown-item" style="font-family:'Courier New',monospace;font-size:16px;" onclick="setFontFamily('Courier New','Courier New')">Courier New</div>
+          <div class="tb-dropdown-item" style="font-family:'Source Code Pro',monospace;font-size:16px;" onclick="setFontFamily('Source Code Pro','Source Code Pro')">Source Code Pro</div>
         </div>
       </div>
 
       <!-- Font size -->
-      <input type="number" class="tb-num-input" id="fontSizeInput" value="14" min="6" max="96" onchange="applyFontSize(this.value)" title="Размер шрифта"/>
+      <div class="tb-select-wrap">
+        <div class="tb-select-trigger" id="fontSizeTrigger" onclick="toggleDropdown('fontSizeDropdown',event)" style="width:68px;">
+          <span id="fontSizeLabel">14</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tb-dropdown" id="fontSizeDropdown" style="width:80px;">
+          <div class="tb-dropdown-item" onclick="pickFontSize(8)">8</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(10)">10</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(11)">11</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(12)">12</div>
+          <div class="tb-dropdown-item active" onclick="pickFontSize(14)">14</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(16)">16</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(18)">18</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(20)">20</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(24)">24</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(28)">28</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(36)">36</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(48)">48</div>
+          <div class="tb-dropdown-item" onclick="pickFontSize(72)">72</div>
+        </div>
+      </div>
 
       <div class="tb-divider"></div>
 
       <!-- Line spacing -->
-      <input type="number" class="tb-num-input" id="lineSpacingInput" value="1.5" min="0.5" max="4" step="0.1" onchange="applyLineSpacing(this.value)" title="Межстрочный интервал"/>
+      <div class="tb-select-wrap">
+        <div class="tb-select-trigger" id="lineSpacingTrigger" onclick="toggleDropdown('lineSpacingDropdown',event)" style="width:68px;" title="Межстрочный интервал">
+          <span id="lineSpacingLabel">1.5×</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tb-dropdown" id="lineSpacingDropdown" style="width:90px;">
+          <div class="tb-dropdown-item" onclick="pickLineSpacing(1.0)">1.0×</div>
+          <div class="tb-dropdown-item" onclick="pickLineSpacing(1.15)">1.15×</div>
+          <div class="tb-dropdown-item" onclick="pickLineSpacing(1.25)">1.25×</div>
+          <div class="tb-dropdown-item active" onclick="pickLineSpacing(1.5)">1.5×</div>
+          <div class="tb-dropdown-item" onclick="pickLineSpacing(1.75)">1.75×</div>
+          <div class="tb-dropdown-item" onclick="pickLineSpacing(2.0)">2.0×</div>
+          <div class="tb-dropdown-item" onclick="pickLineSpacing(2.5)">2.5×</div>
+          <div class="tb-dropdown-item" onclick="pickLineSpacing(3.0)">3.0×</div>
+        </div>
+      </div>
 
       <!-- Superscript / Subscript -->
       <button class="tb-btn" id="btnSup" onclick="exec('superscript')" title="Верхний индекс" style="font-size:12px;">x²</button>
@@ -776,20 +886,36 @@
     <div class="ctx-item" onclick="tableAction('alignRight')">Выравнивание: по правому краю</div>
   </div>
 
+  <!-- Page number tooltip -->
+  <div class="page-indicator" id="pageIndicator"></div>
+
+  <!-- Custom scrollbar -->
+  <div class="doc-custom-scrollbar" id="docScrollbar">
+    <div class="doc-custom-scrollbar-btn up" id="docScrollUp">
+      <svg width="8" height="6" viewBox="0 0 8 6"><path d="M4 1L1 5h6z" fill="#3C3C3C"/></svg>
+    </div>
+    <div class="doc-custom-scrollbar-thumb" id="docScrollThumb"></div>
+    <div class="doc-custom-scrollbar-btn down" id="docScrollDown">
+      <svg width="8" height="6" viewBox="0 0 8 6"><path d="M4 5L1 1h6z" fill="#3C3C3C"/></svg>
+    </div>
+  </div>
+
   <!-- Main content area -->
   <div class="ed-main">
     <!-- Document canvas -->
     <div class="doc-canvas" id="docCanvas">
-      <div class="doc-page">
-        <!-- Suggestion chips on empty doc -->
-        <div class="doc-suggestion-chips" id="docSuggestionChips">
-          <div class="doc-chip" onclick="docChipClick('Составь план')">Составь план</div>
-          <div class="doc-chip" onclick="docChipClick('Помоги с оформлением')">Помоги с оформлением</div>
-          <div class="doc-chip" onclick="docChipClick('Подбери источники')">Подбери источники</div>
-          <div class="doc-chip" onclick="docChipClick('Генерация идей')">Генерация идей</div>
+      <div class="doc-scroll-area" id="docScrollArea">
+        <div class="doc-page" id="docPage1" data-page="1">
+          <!-- Suggestion chips on empty doc -->
+          <div class="doc-suggestion-chips" id="docSuggestionChips">
+            <div class="doc-chip" onclick="docChipClick('Составь план')">Составь план</div>
+            <div class="doc-chip" onclick="docChipClick('Помоги с оформлением')">Помоги с оформлением</div>
+            <div class="doc-chip" onclick="docChipClick('Подбери источники')">Подбери источники</div>
+            <div class="doc-chip" onclick="docChipClick('Генерация идей')">Генерация идей</div>
+          </div>
+          <!-- Editable area -->
+          <div id="editorContent" contenteditable="true" data-placeholder="Начните вводить текст..." class="show-placeholder"></div>
         </div>
-        <!-- Editable area -->
-        <div id="editorContent" contenteditable="true" data-placeholder="Начните вводить текст..."></div>
       </div>
     </div>
 
@@ -887,9 +1013,32 @@ function setView(view) {
 // ─── Exec command helper ───────────────────────────────────
 const edEl = () => document.getElementById('editorContent');
 
-function exec(cmd, value) {
+// Save/restore selection so toolbar clicks don't lose it
+let _savedRange = null;
+function saveSelection() {
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0) _savedRange = sel.getRangeAt(0).cloneRange();
+}
+function restoreSelection() {
   edEl().focus();
-  document.execCommand(cmd, false, value || null);
+  if (!_savedRange) return;
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(_savedRange);
+}
+
+// Save selection whenever it changes inside the editor
+document.addEventListener('selectionchange', () => {
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0) {
+    const node = sel.getRangeAt(0).commonAncestorContainer;
+    if (edEl().contains(node)) saveSelection();
+  }
+});
+
+function exec(cmd, value) {
+  restoreSelection();
+  document.execCommand(cmd, false, value !== undefined ? value : null);
   updateToolbarState();
 }
 
@@ -910,17 +1059,71 @@ function updateToolbarState() {
   // OL/UL
   document.getElementById('btnOL').classList.toggle('active', document.queryCommandState('insertOrderedList'));
   document.getElementById('btnUL').classList.toggle('active', document.queryCommandState('insertUnorderedList'));
+
+  // Detect current heading style from cursor position
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0) {
+    let node = sel.anchorNode;
+    let detectedLabel = 'Обычный текст';
+    // Check computed font size and weight of the node
+    while (node && node !== edEl()) {
+      if (node.nodeType === 1) {
+        const cs = window.getComputedStyle(node);
+        const fs = parseFloat(cs.fontSize);
+        const fw = cs.fontWeight;
+        const fi = cs.fontStyle;
+        const weight = parseInt(fw);
+        if (fi === 'italic' && weight >= 600) { detectedLabel = 'Подзаголовок'; break; }
+        if (fs >= 26) { detectedLabel = 'Основной заголовок'; break; }
+        if (fs >= 20) { detectedLabel = 'Заголовок 1'; break; }
+        if (fs >= 16) { detectedLabel = 'Заголовок 2'; break; }
+        if (fs >= 14 && weight >= 600) { detectedLabel = 'Заголовок 3'; break; }
+        break;
+      }
+      node = node.parentNode;
+    }
+    document.getElementById('headingLabel').textContent = detectedLabel;
+
+    // Detect font family
+    const FONT_LABELS = {
+      'times new roman': 'Times NR', 'georgia': 'Georgia',
+      'playfair display': 'Playfair Display', 'lora': 'Lora',
+      'inter': 'Inter', 'roboto': 'Roboto', 'open sans': 'Open Sans',
+      'montserrat': 'Montserrat', 'arial': 'Arial', 'verdana': 'Verdana',
+      'courier new': 'Courier New', 'source code pro': 'Source Code Pro',
+    };
+    let fontNode = sel.anchorNode;
+    while (fontNode && fontNode !== edEl()) {
+      if (fontNode.nodeType === 1) {
+        const ff = window.getComputedStyle(fontNode).fontFamily
+          .split(',')[0].replace(/['"]/g, '').trim().toLowerCase();
+        const lbl = FONT_LABELS[ff];
+        if (lbl) { document.getElementById('fontFamilyLabel').textContent = lbl; break; }
+      }
+      fontNode = fontNode.parentNode;
+    }
+  }
 }
 
-document.getElementById('editorContent').addEventListener('keyup', updateToolbarState);
-document.getElementById('editorContent').addEventListener('mouseup', updateToolbarState);
+document.getElementById('editorContent').addEventListener('keyup', () => { saveSelection(); updateToolbarState(); });
+document.getElementById('editorContent').addEventListener('mouseup', () => { saveSelection(); updateToolbarState(); });
+document.getElementById('editorContent').addEventListener('keydown', saveSelection);
 
 // ─── Dropdowns ─────────────────────────────────────────────
-function toggleDropdown(id) {
-  const el = document.getElementById(id);
-  const wasOpen = el.classList.contains('open');
+function toggleDropdown(id, event) {
+  if (event) event.stopPropagation();
+  const dropdown = document.getElementById(id);
+  const wasOpen = dropdown.classList.contains('open');
   closeAllDropdowns();
-  if (!wasOpen) el.classList.add('open');
+  if (!wasOpen) {
+    // Position under the trigger element
+    const trigger = event ? event.currentTarget : dropdown.previousElementSibling;
+    const rect = trigger.getBoundingClientRect();
+    dropdown.style.top = (rect.bottom + 4) + 'px';
+    dropdown.style.left = rect.left + 'px';
+    dropdown.style.minWidth = rect.width + 'px';
+    dropdown.classList.add('open');
+  }
 }
 function closeAllDropdowns() {
   document.querySelectorAll('.tb-dropdown').forEach(d => d.classList.remove('open'));
@@ -932,21 +1135,76 @@ document.addEventListener('click', e => {
 });
 
 // ─── Heading type ──────────────────────────────────────────
+const HEADING_STYLES = {
+  h1: { fontSize: '28px', fontWeight: '700', fontStyle: 'normal' },
+  h2: { fontSize: '22px', fontWeight: '700', fontStyle: 'normal' },
+  h3: { fontSize: '18px', fontWeight: '700', fontStyle: 'normal' },
+  h4: { fontSize: '15px', fontWeight: '600', fontStyle: 'normal' },
+  h5: { fontSize: '14px', fontWeight: '600', fontStyle: 'italic' },
+  p:  { fontSize: '14px', fontWeight: '400', fontStyle: 'normal' },
+};
+
 function setHeading(tag, label) {
-  edEl().focus();
-  document.execCommand('formatBlock', false, tag);
+  restoreSelection();
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+
+  const style = HEADING_STYLES[tag];
+
+  // Wrap selection in a span with only size+weight+style, preserving everything else
+  const range = sel.getRangeAt(0);
+
+  // If collapsed (no selection), apply to whole current block
+  if (range.collapsed) {
+    let node = sel.anchorNode;
+    while (node && node !== edEl()) {
+      if (node.nodeType === 1) {
+        node.style.fontSize = style.fontSize;
+        node.style.fontWeight = style.fontWeight;
+        node.style.fontStyle = style.fontStyle;
+        break;
+      }
+      node = node.parentNode;
+    }
+  } else {
+    // Apply fontSize via execCommand hack, then fix fontWeight/Style via span
+    // First set font size
+    document.execCommand('fontSize', false, '7');
+    edEl().querySelectorAll('font[size="7"]').forEach(el => {
+      el.removeAttribute('size');
+      el.style.fontSize = style.fontSize;
+    });
+
+    // Restore selection and apply bold/normal weight via a wrapper span
+    restoreSelection();
+    const range2 = sel.getRangeAt(0);
+    const span = document.createElement('span');
+    span.style.fontWeight = style.fontWeight;
+    span.style.fontStyle = style.fontStyle;
+    try {
+      range2.surroundContents(span);
+    } catch(e) {
+      const frag = range2.extractContents();
+      span.appendChild(frag);
+      range2.insertNode(span);
+    }
+  }
+
   document.getElementById('headingLabel').textContent = label;
+  document.querySelectorAll('#headingDropdown .tb-dropdown-item').forEach(el => {
+    el.classList.toggle('active', el.textContent.trim() === label);
+  });
   closeAllDropdowns();
   updateToolbarState();
 }
 
 // ─── Font family ───────────────────────────────────────────
 function setFontFamily(family, label) {
-  exec('fontName', family);
+  restoreSelection();
+  document.execCommand('fontName', false, family);
   document.getElementById('fontFamilyLabel').textContent = label;
-  // Update active state in dropdown
   document.querySelectorAll('#fontFamilyDropdown .tb-dropdown-item').forEach(el => {
-    el.classList.toggle('active', el.textContent.trim().startsWith(label));
+    el.classList.toggle('active', el.textContent.trim() === label);
   });
   closeAllDropdowns();
 }
@@ -954,12 +1212,21 @@ function setFontFamily(family, label) {
 // ─── Font size ─────────────────────────────────────────────
 function applyFontSize(size) {
   if (!size || size < 1) return;
-  edEl().focus();
+  restoreSelection();
   document.execCommand('fontSize', false, '7');
   edEl().querySelectorAll('font[size="7"]').forEach(el => {
     el.removeAttribute('size');
     el.style.fontSize = size + 'px';
   });
+}
+
+function pickFontSize(size) {
+  document.getElementById('fontSizeLabel').textContent = size;
+  document.querySelectorAll('#fontSizeDropdown .tb-dropdown-item').forEach(el => {
+    el.classList.toggle('active', parseInt(el.textContent) === size);
+  });
+  applyFontSize(size);
+  closeAllDropdowns();
 }
 
 // ─── Text color ────────────────────────────────────────────
@@ -990,16 +1257,47 @@ function applyUnderlineColor(color) {
 
 // ─── Line spacing ──────────────────────────────────────────
 function applyLineSpacing(value) {
+  restoreSelection();
   const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return;
-  let node = sel.anchorNode;
-  while (node && node !== edEl()) {
-    if (node.nodeType === 1 && /^(P|H[1-6]|LI|DIV|BLOCKQUOTE)$/.test(node.tagName)) {
-      node.style.lineHeight = value;
-      break;
-    }
-    node = node.parentNode;
+  if (!sel || !sel.rangeCount) {
+    // No selection — apply to whole editor
+    edEl().style.lineHeight = value;
+    return;
   }
+  // Apply to all block-level nodes in selection range
+  const range = sel.getRangeAt(0);
+  const container = range.commonAncestorContainer;
+  const root = container.nodeType === 1 ? container : container.parentElement;
+  // Collect all block nodes within the range
+  const blocks = [];
+  const walker = document.createTreeWalker(edEl(), NodeFilter.SHOW_ELEMENT, {
+    acceptNode: n => /^(P|H[1-6]|LI|DIV|BLOCKQUOTE)$/.test(n.tagName) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
+  });
+  let n;
+  while (n = walker.nextNode()) {
+    if (range.intersectsNode(n)) blocks.push(n);
+  }
+  if (blocks.length > 0) {
+    blocks.forEach(b => b.style.lineHeight = value);
+  } else {
+    // Fallback: find nearest block ancestor of cursor
+    let node = sel.anchorNode;
+    while (node && node !== edEl()) {
+      if (node.nodeType === 1 && /^(P|H[1-6]|LI|DIV|BLOCKQUOTE)$/.test(node.tagName)) {
+        node.style.lineHeight = value; break;
+      }
+      node = node.parentNode;
+    }
+  }
+}
+
+function pickLineSpacing(value) {
+  document.getElementById('lineSpacingLabel').textContent = value + '×';
+  document.querySelectorAll('#lineSpacingDropdown .tb-dropdown-item').forEach(el => {
+    el.classList.toggle('active', el.textContent.trim() === value + '×');
+  });
+  applyLineSpacing(value);
+  closeAllDropdowns();
 }
 
 // ─── Superscript / Subscript ───────────────────────────────
@@ -1051,9 +1349,50 @@ function insertFootnote() {
   exec('insertHTML', `<sup class="footnote-marker" title="Сноска ${_footnoteCount}">[${_footnoteCount}]</sup>`);
 }
 
+// ─── Multi-page document ──────────────────────────────────
+let _pageCount = 1;
+const PAGE_CONTENT_HEIGHT = 1123 - 56 - 56; // page height minus top+bottom padding
+
+function createNewPage() {
+  _pageCount++;
+  const scrollArea = document.getElementById('docScrollArea');
+  const newPage = document.createElement('div');
+  newPage.className = 'doc-page';
+  newPage.id = 'docPage' + _pageCount;
+  newPage.dataset.page = _pageCount;
+  const editable = document.createElement('div');
+  editable.contentEditable = 'true';
+  editable.className = 'editorContentPage';
+  editable.style.cssText = 'outline:none;min-height:400px;font-size:14px;line-height:1.6;color:var(--color-text-primary);font-family:"Times New Roman",Times,serif;';
+  editable.dataset.placeholder = 'Продолжайте вводить текст...';
+  editable.addEventListener('input', () => checkPageOverflow(editable, newPage));
+  editable.addEventListener('keyup', updateToolbarState);
+  editable.addEventListener('mouseup', updateToolbarState);
+  newPage.appendChild(editable);
+  scrollArea.appendChild(newPage);
+  editable.focus();
+  // scroll new page into view
+  newPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  return editable;
+}
+
+function checkPageOverflow(editable, page) {
+  const maxH = PAGE_CONTENT_HEIGHT;
+  if (editable.scrollHeight > maxH) {
+    createNewPage();
+  }
+}
+
+// Check overflow on main first-page editor
+document.getElementById('editorContent').addEventListener('input', function() {
+  updateChipsVisibility();
+  updatePlaceholder();
+  checkPageOverflow(this, document.getElementById('docPage1'));
+});
+
 // ─── Insert page break ────────────────────────────────────
 function insertPageBreak() {
-  exec('insertHTML', '<div class="page-break" contenteditable="false">— Разрыв страницы —</div><p><br></p>');
+  createNewPage();
 }
 
 // ─── Insert table picker ───────────────────────────────────
@@ -1297,14 +1636,145 @@ function aiPrompt(text) {
   sendAiMessage();
 }
 
+// Placeholder visibility
+function updatePlaceholder() {
+  const el = edEl();
+  const empty = el.innerText.trim() === '' && el.innerHTML.replace(/<br\s*\/?>/gi,'').trim() === '';
+  el.classList.toggle('show-placeholder', empty);
+}
+
 // Show/hide suggestion chips based on whether editor has content
 function updateChipsVisibility() {
   const content = edEl().innerText.trim();
   const chips = document.getElementById('docSuggestionChips');
   chips.style.display = content.length > 0 ? 'none' : '';
+  updatePlaceholder();
 }
 
-document.getElementById('editorContent').addEventListener('input', updateChipsVisibility);
+// Init placeholder on load
+updatePlaceholder();
+
+// NOTE: editorContent input is handled in the multi-page section above (checkPageOverflow + updateChipsVisibility)
+
+// ─── Custom scrollbar ─────────────────────────────────────
+(function() {
+  const scrollArea = document.getElementById('docScrollArea');
+  const scrollbar  = document.getElementById('docScrollbar');
+  const thumb      = document.getElementById('docScrollThumb');
+  const btnUp      = document.getElementById('docScrollUp');
+  const btnDown    = document.getElementById('docScrollDown');
+  const PAGE_WIDTH = 794;
+  const THUMB_MIN  = 40;
+  const BTN_H      = 12;
+
+  function updateScrollbar() {
+    const page = document.querySelector('.doc-page');
+    if (!page) return;
+
+    // Position: fixed, 24px right of the page
+    const pageRect = page.getBoundingClientRect();
+    const scrollRect = scrollArea.getBoundingClientRect();
+
+    const sbLeft = pageRect.right + 24;
+    const sbTop  = scrollRect.top;
+    const sbH    = scrollRect.height;
+
+    scrollbar.style.left   = sbLeft + 'px';
+    scrollbar.style.top    = sbTop + 'px';
+    scrollbar.style.height = sbH + 'px';
+
+    // Thumb size & position
+    const scrollable = scrollArea.scrollHeight - scrollArea.clientHeight;
+    if (scrollable <= 0) { scrollbar.style.display = 'none'; return; }
+    scrollbar.style.display = 'block';
+
+    const trackH   = sbH - BTN_H * 2;
+    const thumbH   = Math.max(THUMB_MIN, (scrollArea.clientHeight / scrollArea.scrollHeight) * trackH);
+    const thumbTop = BTN_H + (scrollArea.scrollTop / scrollable) * (trackH - thumbH);
+
+    thumb.style.height = thumbH + 'px';
+    thumb.style.top    = thumbTop + 'px';
+  }
+
+  // Update on scroll and resize
+  scrollArea.addEventListener('scroll', updateScrollbar);
+  window.addEventListener('resize', updateScrollbar);
+  // Initial position after layout
+  setTimeout(updateScrollbar, 100);
+
+  // Redirect wheel on entire editor (except AI sidebar, header, toolbar) to scrollArea
+  document.getElementById('screen-editor').addEventListener('wheel', function(e) {
+    const blocked = e.target.closest('.ai-sidebar, .ai-panel, .ed-header, .ed-toolbar-wrapper');
+    if (blocked) return;
+    e.preventDefault();
+    scrollArea.scrollBy({ top: e.deltaY, behavior: 'auto' });
+  }, { passive: false });
+
+  // Button clicks
+  btnUp.addEventListener('click',   () => scrollArea.scrollBy({ top: -80,  behavior: 'smooth' }));
+  btnDown.addEventListener('click', () => scrollArea.scrollBy({ top:  80,  behavior: 'smooth' }));
+
+  // Thumb drag
+  let _dragStartY = 0, _dragStartScroll = 0;
+  thumb.addEventListener('mousedown', e => {
+    e.preventDefault();
+    _dragStartY      = e.clientY;
+    _dragStartScroll = scrollArea.scrollTop;
+    document.addEventListener('mousemove', onThumbDrag);
+    document.addEventListener('mouseup',   onThumbUp);
+  });
+  function onThumbDrag(e) {
+    const sbH      = scrollbar.getBoundingClientRect().height;
+    const trackH   = sbH - BTN_H * 2;
+    const thumbH   = thumb.offsetHeight;
+    const ratio    = (scrollArea.scrollHeight - scrollArea.clientHeight) / (trackH - thumbH);
+    scrollArea.scrollTop = _dragStartScroll + (e.clientY - _dragStartY) * ratio;
+  }
+  function onThumbUp() {
+    document.removeEventListener('mousemove', onThumbDrag);
+    document.removeEventListener('mouseup',   onThumbUp);
+  }
+
+  // Update every frame during sidebar open/close transition
+  let _rafId = null;
+  function animateScrollbarPosition() {
+    updateScrollbar();
+    _rafId = requestAnimationFrame(animateScrollbarPosition);
+  }
+  document.getElementById('aiSidebar').addEventListener('transitionstart', () => {
+    cancelAnimationFrame(_rafId);
+    animateScrollbarPosition();
+  });
+  document.getElementById('aiSidebar').addEventListener('transitionend', () => {
+    cancelAnimationFrame(_rafId);
+    updateScrollbar();
+  });
+})();
+
+// ─── Page indicator on scroll ─────────────────────────────
+let _pageIndicatorTimer = null;
+document.getElementById('docScrollArea').addEventListener('scroll', function() {
+  const scrollArea = this;
+  const pages = scrollArea.querySelectorAll('.doc-page');
+  let currentPage = 1;
+  const scrollTop = scrollArea.scrollTop;
+  pages.forEach(page => {
+    const top = page.offsetTop - scrollArea.scrollTop;
+    if (top <= scrollArea.clientHeight / 2) currentPage = parseInt(page.dataset.page);
+  });
+
+  if (_pageCount > 1) {
+    const indicator = document.getElementById('pageIndicator');
+    indicator.textContent = 'Страница ' + currentPage + ' из ' + _pageCount;
+    // Position to the right of the scrollbar (~60px from left of scroll area)
+    const rect = scrollArea.getBoundingClientRect();
+    indicator.style.left = (rect.left + 52) + 'px';
+    indicator.style.top = (rect.top + rect.height / 2 - 16) + 'px';
+    indicator.classList.add('visible');
+    clearTimeout(_pageIndicatorTimer);
+    _pageIndicatorTimer = setTimeout(() => indicator.classList.remove('visible'), 5000);
+  }
+});
 
 function sendAiMessage() {
   const input = document.getElementById('aiInputField');
@@ -1324,6 +1794,115 @@ function sendAiMessage() {
   input.value = '';
   messages.scrollTop = messages.scrollHeight;
 }
+
+// ─── Image resize ──────────────────────────────────────────
+function wrapImage(img) {
+  if (img.closest('.img-wrap')) return; // already wrapped
+  const wrap = document.createElement('span');
+  wrap.className = 'img-wrap';
+  wrap.contentEditable = 'false';
+  img.parentNode.insertBefore(wrap, img);
+  wrap.appendChild(img);
+  ['nw','ne','sw','se'].forEach(pos => {
+    const h = document.createElement('span');
+    h.className = 'img-handle';
+    h.dataset.pos = pos;
+    wrap.appendChild(h);
+  });
+  // Ensure image has explicit dimensions from current rendered size
+  if (!img.style.width) {
+    img.style.width = img.offsetWidth + 'px';
+    img.style.height = img.offsetHeight + 'px';
+  }
+}
+
+// Intercept paste/drop of images into editor to wrap them
+edEl().addEventListener('paste', e => {
+  const items = e.clipboardData && e.clipboardData.items;
+  if (!items) return;
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      e.preventDefault();
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = document.createElement('img');
+        img.src = ev.target.result;
+        img.style.width = '300px';
+        img.onload = () => wrapImage(img);
+        restoreSelection();
+        document.execCommand('insertHTML', false, img.outerHTML);
+        // After insert, find the raw img and wrap it
+        setTimeout(() => {
+          edEl().querySelectorAll('img:not(.img-wrap img)').forEach(wrapImage);
+        }, 50);
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+  }
+});
+
+// Also wrap any images already in the editor (e.g. from drag-drop)
+edEl().addEventListener('drop', () => {
+  setTimeout(() => edEl().querySelectorAll('img:not(.img-wrap img)').forEach(wrapImage), 100);
+});
+
+// Select/deselect image on click
+document.addEventListener('click', e => {
+  const wrap = e.target.closest('.img-wrap');
+  document.querySelectorAll('.img-wrap.selected').forEach(w => { if (w !== wrap) w.classList.remove('selected'); });
+  if (wrap) wrap.classList.add('selected');
+});
+
+// Resize drag logic
+let _resizing = null;
+
+document.addEventListener('mousedown', e => {
+  const handle = e.target.closest('.img-handle');
+  if (!handle) return;
+  e.preventDefault();
+  e.stopPropagation();
+
+  const wrap = handle.closest('.img-wrap');
+  const img = wrap.querySelector('img');
+  const pos = handle.dataset.pos;
+  const startX = e.clientX;
+  const startY = e.clientY;
+  const startW = img.offsetWidth;
+  const startH = img.offsetHeight;
+  const aspectRatio = startW / startH;
+
+  _resizing = { wrap, img, pos, startX, startY, startW, startH, aspectRatio };
+  wrap.classList.add('selected');
+  document.body.style.cursor = pos + '-resize';
+  document.body.style.userSelect = 'none';
+});
+
+document.addEventListener('mousemove', e => {
+  if (!_resizing) return;
+  const { img, pos, startX, startY, startW, startH, aspectRatio } = _resizing;
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+
+  let newW, newH;
+  if (pos === 'se') { newW = startW + dx; newH = newW / aspectRatio; }
+  else if (pos === 'sw') { newW = startW - dx; newH = newW / aspectRatio; }
+  else if (pos === 'ne') { newW = startW + dx; newH = newW / aspectRatio; }
+  else if (pos === 'nw') { newW = startW - dx; newH = newW / aspectRatio; }
+
+  newW = Math.max(40, newW);
+  newH = Math.max(40, newH);
+  img.style.width = newW + 'px';
+  img.style.height = newH + 'px';
+});
+
+document.addEventListener('mouseup', () => {
+  if (!_resizing) return;
+  _resizing = null;
+  document.body.style.cursor = '';
+  document.body.style.userSelect = '';
+});
 
 // ─── Keyboard shortcuts ────────────────────────────────────
 document.addEventListener('keydown', e => {
