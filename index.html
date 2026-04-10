@@ -14,7 +14,6 @@
       --color-accent: #216CFF;
       --color-accent-hover: #1A55D4;
       --color-accent-click: #1A3FA0;
-      --color-accent-disabled: #A0BEFF;
       --color-accent-subtle: rgba(33,108,255,0.05);
       --color-text-primary: #3C3C3C;
       --color-text-secondary: #6B6B6B;
@@ -22,7 +21,6 @@
       --color-text-disabled: #BDBDBD;
       --color-border-default: #E4E4E4;
       --color-border-hover: #A8C4FA;
-      --color-border-active: #2F6FED;
       --color-bg-base: #FFFFFF;
       --color-bg-surface: #F7F7F5;
       --color-bg-hover: #F0F0EE;
@@ -33,668 +31,370 @@
       --color-success-subtle: #E8F5E9;
     }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--color-bg-surface);
-      color: var(--color-text-primary);
-      min-height: 100vh;
-    }
+    body { font-family: 'Inter', sans-serif; background: var(--color-bg-surface); color: var(--color-text-primary); min-height: 100vh; }
 
-    /* ─── SCREENS ─────────────────────────────────────── */
+    /* ─── SCREENS ─── */
     .screen { display: none; flex-direction: column; min-height: 100vh; }
     .screen.active { display: flex; }
 
-    /* ─── HEADER ──────────────────────────────────────── */
+    /* ─── SHARED HEADER ─── */
     .header {
       background: var(--color-bg-surface);
       border-bottom: 1px solid var(--color-border-default);
-      height: 88px;
-      padding: 0 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
+      height: 88px; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
     }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    /* AP Shield Logo */
-    .logo-shield {
-      width: 36px;
-      height: 40px;
-      flex-shrink: 0;
-    }
-
-    .header-brand {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--color-accent);
-      letter-spacing: 0.5px;
-      line-height: 1;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .header-user-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 2px;
-    }
-
-    .header-email {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      line-height: 20px;
-      letter-spacing: 0.2px;
-    }
-
-    .header-role {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      opacity: 0.7;
-      line-height: 16px;
-    }
-
+    .header-left { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .logo-shield { width: 36px; height: 40px; flex-shrink: 0; }
+    .header-brand { font-size: 18px; font-weight: 700; color: var(--color-accent); letter-spacing: 0.5px; }
+    .header-right { display: flex; align-items: center; gap: 24px; }
+    .header-user-info { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+    .header-email { font-size: 14px; font-weight: 500; color: var(--color-text-primary); line-height: 20px; letter-spacing: 0.2px; }
+    .header-role { font-size: 12px; font-weight: 600; color: var(--color-text-primary); opacity: 0.7; line-height: 16px; }
     .btn-logout {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      height: 40px;
-      padding: 0 16px;
-      background: var(--color-bg-base);
-      border: 1px solid var(--color-border-default);
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      font-family: 'Inter', sans-serif;
-      transition: background 0.15s;
+      display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px;
+      background: var(--color-bg-base); border: 1px solid var(--color-border-default);
+      border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600;
+      color: var(--color-text-primary); font-family: 'Inter', sans-serif; transition: background 0.15s;
     }
     .btn-logout:hover { background: var(--color-bg-hover); }
-    .btn-logout:active { background: var(--color-bg-active); }
-    .btn-logout svg { flex-shrink: 0; }
 
-    /* ─── MAIN ────────────────────────────────────────── */
-    .main {
-      flex: 1;
-      padding: 0 40px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ─── TITLE ROW ───────────────────────────────────── */
-    .title-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 0 32px;
-    }
-
-    .page-title {
-      font-family: 'Manrope', sans-serif;
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      line-height: 32px;
-      letter-spacing: -0.5px;
-    }
-
-    .view-switcher {
-      background: var(--color-bg-base);
-      border: 1px solid var(--color-border-default);
-      border-radius: 12px;
-      padding: 4px;
-      display: flex;
-      gap: 4px;
-    }
-
-    .view-btn {
-      width: 36px;
-      height: 32px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      transition: background 0.15s;
-    }
+    /* ─── CABINET MAIN ─── */
+    .main { flex: 1; padding: 0 40px; display: flex; flex-direction: column; }
+    .title-row { display: flex; align-items: center; justify-content: space-between; padding: 24px 0 32px; }
+    .page-title { font-family: 'Manrope', sans-serif; font-size: 24px; font-weight: 600; color: var(--color-text-primary); line-height: 32px; letter-spacing: -0.5px; }
+    .view-switcher { background: var(--color-bg-base); border: 1px solid var(--color-border-default); border-radius: 12px; padding: 4px; display: flex; gap: 4px; }
+    .view-btn { width: 36px; height: 32px; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; background: transparent; transition: background 0.15s; }
     .view-btn.active { background: var(--color-accent); }
     .view-btn:not(.active):hover { background: var(--color-bg-hover); }
-
-    .grid-icon {
-      display: grid;
-      grid-template-columns: 7px 7px;
-      gap: 2px;
-    }
-    .grid-icon span {
-      width: 7px; height: 7px;
-      border-radius: 2px;
-      background: var(--color-text-secondary);
-    }
+    .grid-icon { display: grid; grid-template-columns: 7px 7px; gap: 2px; }
+    .grid-icon span { width: 7px; height: 7px; border-radius: 2px; background: var(--color-text-secondary); }
     .view-btn.active .grid-icon span { background: white; }
-
-    .list-icon {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .list-icon span {
-      width: 16px; height: 2px;
-      border-radius: 1px;
-      background: var(--color-text-secondary);
-    }
+    .list-icon { display: flex; flex-direction: column; gap: 4px; }
+    .list-icon span { width: 16px; height: 2px; border-radius: 1px; background: var(--color-text-secondary); }
     .view-btn.active .list-icon span { background: white; }
 
-    /* ─── TABLE VIEW ──────────────────────────────────── */
+    /* ─── TABLE VIEW ─── */
     .table-view { display: flex; flex-direction: column; gap: 8px; flex: 1; }
     .table-view.hidden { display: none; }
-
-    .table-head {
-      display: flex;
-      align-items: center;
-      height: 40px;
-      background: var(--color-bg-surface);
-    }
-
-    .th {
-      display: flex;
-      align-items: center;
-      height: 40px;
-      padding: 8px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      opacity: 0.6;
-      line-height: 16px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
+    .table-head { display: flex; align-items: center; height: 40px; }
+    .th { display: flex; align-items: center; height: 40px; padding: 8px 16px; font-size: 12px; font-weight: 600; color: var(--color-text-primary); opacity: 0.6; white-space: nowrap; flex-shrink: 0; }
     .th.col-name { flex: 1 0 0; min-width: 0; }
     .th.col-teacher { width: 400px; min-width: 240px; }
     .th.col-status { width: 250px; min-width: 180px; }
     .th.col-date { width: 180px; min-width: 136px; }
     .th.col-action { width: 200px; min-width: 136px; }
-
-    .table-body {
-      background: var(--color-bg-base);
-      border: 1px solid var(--color-border-default);
-      border-radius: 16px;
-      overflow: hidden;
-      flex: 1;
-    }
-
-    .table-row {
-      display: flex;
-      align-items: center;
-      height: 96px;
-      border-bottom: 1px solid var(--color-border-default);
-      cursor: pointer;
-      transition: background 0.15s;
-    }
+    .table-body { background: var(--color-bg-base); border: 1px solid var(--color-border-default); border-radius: 16px; overflow: hidden; flex: 1; }
+    .table-row { display: flex; align-items: center; height: 96px; border-bottom: 1px solid var(--color-border-default); cursor: pointer; transition: background 0.15s; }
     .table-row:last-child { border-bottom: none; }
     .table-row:hover { background: var(--color-bg-hover); }
-
-    .td {
-      display: flex;
-      align-items: center;
-      height: 96px;
-      padding: 8px 16px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      line-height: 20px;
-      letter-spacing: 0.2px;
-      flex-shrink: 0;
-    }
-    .td.col-name {
-      flex: 1 0 0;
-      min-width: 0;
-      overflow: hidden;
-    }
-    .td.col-name span {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      display: block;
-    }
+    .td { display: flex; align-items: center; height: 96px; padding: 8px 16px; font-size: 14px; font-weight: 500; color: var(--color-text-primary); line-height: 20px; letter-spacing: 0.2px; flex-shrink: 0; }
+    .td.col-name { flex: 1 0 0; min-width: 0; overflow: hidden; }
+    .td.col-name span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
     .td.col-teacher { width: 400px; min-width: 240px; overflow: hidden; }
     .td.col-teacher span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
     .td.col-status { width: 250px; min-width: 180px; }
     .td.col-date { width: 180px; min-width: 136px; white-space: nowrap; }
     .td.col-action { width: 200px; min-width: 136px; }
-
-    .table-status-badge {
-      display: inline-flex;
-      align-items: center;
-      height: 32px;
-      padding: 0 8px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 16px;
-      white-space: nowrap;
-    }
-    .table-status-badge.checking {
-      background: var(--color-accent-subtle);
-      color: var(--color-accent);
-    }
-    .table-status-badge.done {
-      background: var(--color-success-subtle);
-      color: var(--color-success);
-    }
-    .table-status-badge.error {
-      background: var(--color-error-subtle);
-      color: var(--color-error);
-    }
-    .table-status-badge.pending {
-      background: rgba(60,60,60,0.05);
-      color: var(--color-text-primary);
-    }
-
-    .btn-goto {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 40px;
-      padding: 0 16px;
-      background: var(--color-bg-base);
-      border: 1px solid var(--color-border-default);
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.15s;
-    }
+    .table-status-badge { display: inline-flex; align-items: center; height: 32px; padding: 0 8px; border-radius: 8px; font-size: 12px; font-weight: 600; line-height: 16px; white-space: nowrap; }
+    .table-status-badge.checking { background: var(--color-accent-subtle); color: var(--color-accent); }
+    .table-status-badge.done { background: var(--color-success-subtle); color: var(--color-success); }
+    .table-status-badge.error { background: var(--color-error-subtle); color: var(--color-error); }
+    .table-status-badge.rework { background: #F5F5F5; color: #3C3C3C; }
+    .btn-goto { display: flex; align-items: center; justify-content: center; height: 40px; padding: 0 16px; background: var(--color-bg-base); border: 1px solid var(--color-border-default); border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--color-text-primary); font-family: 'Inter', sans-serif; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
     .btn-goto:hover { background: var(--color-bg-hover); }
 
-    /* ─── CARD GRID ───────────────────────────────────── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
+    /* ─── CARD GRID ─── */
+    .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     .card-grid.hidden { display: none; }
-
-    .card {
-      background: var(--color-bg-base);
-      border: 1px solid var(--color-border-default);
-      border-radius: 16px;
-      padding: 20px 24px;
-      min-width: 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s;
-    }
-    .card:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      border-color: var(--color-border-hover);
-      transform: translateY(-1px);
-    }
+    .card { background: var(--color-bg-base); border: 1px solid var(--color-border-default); border-radius: 16px; padding: 20px 24px; min-width: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer; display: flex; flex-direction: column; gap: 12px; transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s; }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--color-border-hover); transform: translateY(-1px); }
     .card:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-
-    .card-top-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      line-height: 24px;
-      flex: 1;
-    }
-
-    .more-btn {
-      width: 24px;
-      height: 24px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--color-text-secondary);
-      font-size: 16px;
-      letter-spacing: 1px;
-      transition: background 0.15s;
-    }
+    .card-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .card-title { font-size: 18px; font-weight: 600; color: var(--color-text-primary); line-height: 24px; flex: 1; }
+    .more-btn { width: 24px; height: 24px; background: transparent; border: none; cursor: pointer; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-text-secondary); font-size: 16px; letter-spacing: 1px; transition: background 0.15s; }
     .more-btn:hover { background: var(--color-bg-hover); }
+    .card-meta { display: flex; align-items: center; gap: 8px; }
+    .status-badge { padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; line-height: 16px; white-space: nowrap; }
+    .status-badge.checking { background: var(--color-accent-subtle); color: var(--color-accent); }
+    .status-badge.done { background: var(--color-success-subtle); color: var(--color-success); }
+    .status-badge.error { background: var(--color-error-subtle); color: var(--color-error); }
+    .status-badge.rework { background: #F5F5F5; color: #3C3C3C; }
+    .card-version { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); line-height: 16px; }
+    .card-info { display: flex; flex-direction: column; gap: 6px; }
+    .card-info-row { display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 20px; }
+    .info-label { font-weight: 400; color: var(--color-text-secondary); white-space: nowrap; }
+    .info-value { font-weight: 500; color: var(--color-text-primary); white-space: nowrap; }
 
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    /* ─── FOOTER ─── */
+    .footer { background: var(--color-bg-surface); padding: 32px 40px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+    .footer-links { display: flex; gap: 24px; align-items: center; }
+    .footer-links a { font-size: 12px; font-weight: 600; color: #8A8A8A; text-decoration: none; line-height: 16px; white-space: nowrap; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--color-text-primary); }
+    .footer-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .footer-copy { font-size: 12px; font-weight: 600; color: #8A8A8A; line-height: 16px; white-space: nowrap; }
+    .social-icons { display: flex; gap: 8px; align-items: center; }
+    .social-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════════════
+       EDITOR SCREEN
+    ══════════════════════════════════════════════════ */
+    #screen-editor { background: var(--color-bg-surface); }
+
+    /* Editor Header */
+    .ed-header {
+      background: var(--color-bg-base);
+      border-bottom: 1px solid var(--color-border-default);
+      height: 88px; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .ed-header-left { display: flex; align-items: center; gap: 12px; overflow: hidden; min-width: 0; }
+    .ed-logo-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 40px; cursor: pointer; flex-shrink: 0; }
+
+    /* Breadcrumb */
+    .ed-breadcrumb { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow: hidden; }
+    .ed-breadcrumb-trail { display: flex; align-items: center; gap: 6px; }
+    .ed-breadcrumb-link { font-size: 12px; color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: color 0.15s; }
+    .ed-breadcrumb-link:hover { color: var(--color-accent); }
+    .ed-breadcrumb-sep { font-size: 12px; color: var(--color-text-disabled); }
+    .ed-doc-title { font-size: 15px; font-weight: 600; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 600px; }
+    .ed-save-status { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--color-text-secondary); flex-shrink: 0; white-space: nowrap; margin-left: 4px; }
+    .ed-save-check { color: var(--color-success); font-size: 14px; }
+    .ed-header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .ed-header-divider { width: 1px; height: 24px; background: var(--color-border-default); margin: 0 4px; }
+    .ed-btn {
+      display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 16px;
+      background: var(--color-bg-base); border: 1px solid var(--color-border-default);
+      border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600;
+      color: var(--color-text-primary); font-family: 'Inter', sans-serif; white-space: nowrap; transition: background 0.15s;
+    }
+    .ed-btn:hover { background: var(--color-bg-hover); }
+    .ed-btn-primary { background: var(--color-accent); color: white; border-color: var(--color-accent); }
+    .ed-btn-primary:hover { background: var(--color-accent-hover); }
+    .ed-btn-version { gap: 4px; }
+    .ed-btn-version svg { opacity: 0.6; }
+
+    /* Toolbar wrapper */
+    .ed-toolbar-wrapper { background: var(--color-bg-surface); padding: 12px 40px 0; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
+
+    /* Search panel */
+    .search-panel {
+      display: none; align-items: center; gap: 8px;
+      background: var(--color-bg-base); border: 1px solid var(--color-border-default);
+      border-radius: 10px; padding: 6px 12px; height: 40px;
+    }
+    .search-panel.open { display: flex; }
+    .search-panel input { flex: 1; border: none; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--color-text-primary); background: transparent; }
+    .search-panel input::placeholder { color: var(--color-text-disabled); }
+    .search-count { font-size: 12px; color: var(--color-text-secondary); white-space: nowrap; }
+    .search-nav-btn { width: 24px; height: 24px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: var(--color-text-secondary); font-size: 12px; }
+    .search-nav-btn:hover { background: var(--color-bg-hover); }
+    .search-close-btn { width: 24px; height: 24px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: var(--color-text-secondary); }
+    .search-close-btn:hover { background: var(--color-bg-hover); }
+
+    /* Toolbar row */
+    .toolbar-row {
+      display: flex; gap: 4px; align-items: center;
+      background: var(--color-bg-base); border-radius: 10px;
+      padding: 4px 8px; overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .toolbar-row::-webkit-scrollbar { display: none; }
+    .tb-divider { width: 1px; height: 20px; background: var(--color-border-default); flex-shrink: 0; margin: 0 2px; }
+    .tb-btn {
+      width: 32px; height: 32px; border: none; background: transparent; border-radius: 6px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--color-text-primary); font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 500; transition: background 0.12s;
+    }
+    .tb-btn:hover { background: var(--color-bg-hover); }
+    .tb-btn.active { background: var(--color-bg-active); color: var(--color-accent); }
+    .tb-btn.active-filled { background: var(--color-accent); color: white; }
+    .tb-btn svg { flex-shrink: 0; }
+
+    /* Toolbar dropdowns */
+    .tb-select-wrap { position: relative; flex-shrink: 0; }
+    .tb-select-trigger {
+      display: flex; align-items: center; gap: 4px; height: 32px; padding: 0 8px 0 10px;
+      border: 1px solid var(--color-border-default); border-radius: 6px; cursor: pointer;
+      font-size: 13px; color: var(--color-text-primary); background: white; white-space: nowrap;
+      transition: border-color 0.12s;
+    }
+    .tb-select-trigger:hover { border-color: var(--color-border-hover); }
+    .tb-select-trigger span { flex: 1; }
+    .tb-select-trigger svg { opacity: 0.5; flex-shrink: 0; }
+    .tb-dropdown {
+      position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%;
+      background: white; border: 1px solid var(--color-border-default);
+      border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      z-index: 200; display: none; padding: 4px;
+    }
+    .tb-dropdown.open { display: block; }
+    .tb-dropdown-item {
+      padding: 7px 10px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; color: var(--color-text-primary); transition: background 0.1s;
+    }
+    .tb-dropdown-item:hover { background: var(--color-bg-hover); }
+    .tb-dropdown-item.active { background: var(--color-bg-active); color: var(--color-accent); }
+
+    /* Font size & line spacing inputs */
+    .tb-num-input {
+      width: 48px; height: 32px; border: 1px solid var(--color-border-default);
+      border-radius: 6px; text-align: center; font-size: 13px; font-family: 'Inter', sans-serif;
+      color: var(--color-text-primary); background: white; outline: none;
+    }
+    .tb-num-input:focus { border-color: var(--color-accent); }
+
+    /* Color picker buttons */
+    .tb-color-wrap { position: relative; flex-shrink: 0; }
+    .tb-color-btn {
+      width: 32px; height: 32px; border: none; background: transparent; border-radius: 6px;
+      cursor: pointer; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 2px; padding: 6px 8px;
+    }
+    .tb-color-btn:hover { background: var(--color-bg-hover); }
+    .tb-color-label { font-size: 12px; font-weight: 600; color: var(--color-text-primary); line-height: 1; }
+    .tb-color-swatch { width: 16px; height: 3px; border-radius: 2px; }
+    .hidden-color { position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px; }
+
+    /* Table context menu */
+    .table-ctx-menu {
+      position: fixed; z-index: 500; background: white;
+      border: 1px solid var(--color-border-default); border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12); padding: 4px; min-width: 180px; display: none;
+    }
+    .table-ctx-menu.open { display: block; }
+    .ctx-item { padding: 7px 12px; font-size: 13px; color: var(--color-text-primary); cursor: pointer; border-radius: 6px; transition: background 0.1s; }
+    .ctx-item:hover { background: var(--color-bg-hover); }
+    .ctx-separator { height: 1px; background: var(--color-border-default); margin: 4px 0; }
+    .ctx-item.danger { color: var(--color-error); }
+    .ctx-item.danger:hover { background: var(--color-error-subtle); }
+
+    /* Editor main area */
+    .ed-main { flex: 1; display: flex; overflow: hidden; position: relative; }
+
+    /* Document canvas */
+    .doc-canvas { flex: 1; overflow-y: auto; padding: 24px 40px 60px; display: flex; justify-content: center; background: var(--color-bg-surface); }
+    .doc-page {
+      background: white; width: 794px; min-height: 1123px;
+      border-radius: 8px; box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 56px 64px; flex-shrink: 0; position: relative;
     }
 
-    .status-badge {
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 16px;
-      white-space: nowrap;
+    /* AI suggestion chips inside empty page */
+    .doc-suggestion-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .doc-chip {
+      display: inline-flex; align-items: center; padding: 6px 12px;
+      background: var(--color-bg-surface); border: 1px solid var(--color-border-default);
+      border-radius: 16px; font-size: 12px; font-weight: 500; color: var(--color-text-secondary);
+      cursor: pointer; transition: border-color 0.15s, color 0.15s;
     }
-    .status-badge.checking {
-      background: var(--color-accent-subtle);
-      color: var(--color-accent);
-    }
-    .status-badge.done {
-      background: var(--color-success-subtle);
-      color: var(--color-success);
-    }
-    .status-badge.error {
-      background: var(--color-error-subtle);
-      color: var(--color-error);
-    }
+    .doc-chip:hover { border-color: var(--color-border-hover); color: var(--color-accent); }
 
-    .card-version {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--color-text-secondary);
-      line-height: 16px;
-      letter-spacing: 0.2px;
+    /* Contenteditable */
+    #editorContent {
+      outline: none; min-height: 800px; font-size: 14px; line-height: 1.6;
+      color: var(--color-text-primary); font-family: 'Times New Roman', Times, serif;
     }
+    #editorContent:empty:before { content: attr(data-placeholder); color: var(--color-text-disabled); pointer-events: none; }
+    #editorContent h1 { font-size: 24px; font-weight: 700; margin: 16px 0 8px; line-height: 1.3; }
+    #editorContent h2 { font-size: 20px; font-weight: 700; margin: 14px 0 6px; line-height: 1.3; }
+    #editorContent h3 { font-size: 17px; font-weight: 700; margin: 12px 0 6px; line-height: 1.3; }
+    #editorContent h4 { font-size: 15px; font-weight: 600; margin: 10px 0 4px; line-height: 1.3; }
+    #editorContent h5 { font-size: 14px; font-weight: 600; margin: 10px 0 4px; line-height: 1.3; font-style: italic; }
+    #editorContent p { margin: 0 0 8px; }
+    #editorContent ul, #editorContent ol { padding-left: 28px; margin: 8px 0; }
+    #editorContent li { margin: 4px 0; }
+    #editorContent a { color: var(--color-accent); text-decoration: underline; }
+    #editorContent .page-break { border-top: 2px dashed var(--color-border-default); margin: 24px 0; text-align: center; font-size: 11px; color: var(--color-text-disabled); padding-top: 4px; user-select: none; }
+    #editorContent .footnote-marker { color: var(--color-accent); cursor: pointer; font-size: 10px; vertical-align: super; }
+    #editorContent mark.search-hl { background: #FFEC99; border-radius: 2px; }
+    #editorContent mark.search-hl.current { background: #FFB800; }
+    .editor-table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    .editor-table td, .editor-table th { border: 1px solid var(--color-border-default); padding: 8px 10px; min-width: 60px; vertical-align: top; font-size: 13px; }
+    .editor-table th { background: var(--color-bg-surface); font-weight: 600; }
 
-    .card-info {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    /* AI sidebar */
+    .ai-sidebar {
+      width: 443px; flex-shrink: 0; display: flex; flex-direction: column;
+      padding: 16px 16px 16px 0; background: var(--color-bg-surface); overflow: hidden;
+      transition: width 0.25s ease, padding 0.25s ease;
     }
+    .ai-sidebar.collapsed { width: 0; padding: 0; }
+    .ai-panel {
+      flex: 1; display: flex; flex-direction: column; min-height: 0;
+      background: white; border-radius: 16px; overflow: hidden;
+    }
+    .ai-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--color-border-default); flex-shrink: 0; }
+    .ai-header-title { font-size: 16px; font-weight: 600; color: var(--color-text-primary); }
+    .ai-close-btn { width: 32px; height: 32px; border: none; background: transparent; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); transition: background 0.15s; }
+    .ai-close-btn:hover { background: var(--color-bg-hover); }
+    .ai-messages { flex: 1; overflow-y: auto; padding: 12px 20px; display: flex; flex-direction: column; gap: 8px; }
+    .ai-welcome-title { font-size: 15px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; }
+    .ai-welcome-sub { font-size: 13px; color: var(--color-text-secondary); line-height: 18px; margin-bottom: 4px; }
+    .suggestion-card { display: flex; gap: 10px; align-items: flex-start; padding: 8px 12px; background: var(--color-bg-surface); border: 1px solid var(--color-border-default); border-radius: 12px; cursor: pointer; transition: border-color 0.15s; }
+    .suggestion-card:hover { border-color: var(--color-border-hover); }
+    .suggestion-icon { width: 28px; height: 28px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .suggestion-text { flex: 1; min-width: 0; }
+    .suggestion-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+    .suggestion-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 16px; }
+    .ai-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 20px; flex-shrink: 0; }
+    .ai-chip { display: inline-flex; padding: 6px 12px; background: var(--color-bg-surface); border: 1px solid var(--color-border-default); border-radius: 16px; font-size: 12px; font-weight: 500; color: var(--color-text-secondary); cursor: pointer; transition: border-color 0.15s; }
+    .ai-chip:hover { border-color: var(--color-border-hover); color: var(--color-accent); }
+    .ai-input-area { padding: 12px 20px 16px; flex-shrink: 0; }
+    .ai-input-row { display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid var(--color-border-default); border-radius: 12px; padding: 10px 14px; }
+    .ai-input-row input { flex: 1; border: none; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--color-text-primary); }
+    .ai-input-row input::placeholder { color: var(--color-text-disabled); }
+    .ai-send-btn { color: var(--color-accent); font-size: 18px; cursor: pointer; border: none; background: transparent; }
 
-    .card-info-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      line-height: 20px;
+    /* Right toggle strip */
+    .right-toggle {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 2px;
+      background: white; border-radius: 10px 0 0 10px;
+      padding: 8px 0; box-shadow: -2px 0 10px rgba(0,0,0,0.08);
+      z-index: 10; overflow: hidden;
+      transition: width 0.25s ease;
     }
+    /* Compact (AI open): just icons */
+    .right-toggle.ai-open { width: 48px; }
+    /* Expanded (AI closed): icons + labels */
+    .right-toggle.ai-closed { width: 160px; }
 
-    .info-label {
-      font-weight: 400;
-      color: var(--color-text-secondary);
-      white-space: nowrap;
+    .toggle-row {
+      display: flex; align-items: center; gap: 4px;
+      padding: 0 4px; height: 40px; cursor: pointer;
+      border-radius: 6px; transition: background 0.15s; white-space: nowrap;
     }
-    .info-value {
-      font-weight: 500;
-      color: var(--color-text-primary);
-      white-space: nowrap;
-    }
-
-    /* ─── FOOTER ──────────────────────────────────────── */
-    .footer {
-      background: var(--color-bg-surface);
-      padding: 32px 40px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .footer-links a {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      text-decoration: none;
-      line-height: 16px;
-      white-space: nowrap;
+    .toggle-row:hover { background: var(--color-bg-hover); }
+    .toggle-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--color-text-secondary);
+      border: none; background: transparent;
       transition: color 0.15s;
     }
-    .footer-links a:hover { color: var(--color-text-primary); }
+    .toggle-row.ai-active .toggle-icon { color: var(--color-accent); }
+    .toggle-label {
+      font-size: 14px; font-weight: 600; color: var(--color-text-primary);
+      opacity: 0; transition: opacity 0.2s ease 0.05s; white-space: nowrap;
+    }
+    .right-toggle.ai-closed .toggle-label { opacity: 1; }
 
-    .footer-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-shrink: 0;
-    }
-
-    .footer-copy {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      line-height: 16px;
-      white-space: nowrap;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .social-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    /* ─── EDITOR SCREEN ───────────────────────────────── */
-    #screen-editor .header { position: sticky; top: 0; z-index: 10; }
-
-    .editor-toolbar {
-      background: var(--color-bg-base);
-      border-bottom: 1px solid var(--color-border-default);
-      padding: 0 40px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-    }
-
-    .toolbar-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .back-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--color-accent);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 6px 8px;
-      border-radius: 8px;
-      transition: background 0.15s;
-      line-height: 20px;
-    }
-    .back-btn:hover { background: var(--color-bg-active); }
-
-    .toolbar-divider {
-      width: 1px;
-      height: 20px;
-      background: var(--color-border-default);
-    }
-
-    .toolbar-doc-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-    }
-
-    .toolbar-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn {
-      height: 32px;
-      padding: 0 14px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: background 0.15s;
-      line-height: 20px;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-primary {
-      background: var(--color-accent);
-      color: white;
-    }
-    .btn-primary:hover { background: var(--color-accent-hover); }
-    .btn-primary:active { background: var(--color-accent-click); }
-    .btn-secondary {
-      background: transparent;
-      color: var(--color-text-primary);
-      border: 1px solid var(--color-border-default);
-    }
-    .btn-secondary:hover { background: var(--color-bg-hover); }
-
-    .editor-body {
-      flex: 1;
-      display: flex;
-      min-height: 0;
-    }
-
-    .editor-canvas {
-      flex: 1;
-      padding: 60px;
-      overflow-y: auto;
-      background: var(--color-bg-surface);
-      display: flex;
-      justify-content: center;
-    }
-
-    .editor-page {
-      background: white;
-      width: 794px;
-      min-height: 1123px;
-      border-radius: 4px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-      padding: 80px;
-    }
-
-    .editor-page-content {
-      font-size: 14px;
-      line-height: 22px;
-      color: var(--color-text-secondary);
-      border: 2px dashed var(--color-border-default);
-      border-radius: 8px;
-      padding: 40px;
-      text-align: center;
-    }
-
-    .editor-doc-title-input {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      border: none;
-      outline: none;
-      width: 100%;
-      margin-bottom: 32px;
-      line-height: 28px;
-      font-family: 'Inter', sans-serif;
-    }
-    .editor-doc-title-input::placeholder { color: var(--color-text-disabled); }
-
-    .editor-placeholder-hint {
-      font-size: 16px;
-      color: var(--color-text-disabled);
-      margin-bottom: 8px;
-    }
-    .editor-placeholder-sub {
-      font-size: 13px;
-      color: var(--color-text-disabled);
-    }
-
-    .editor-sidebar {
-      width: 280px;
-      border-left: 1px solid var(--color-border-default);
-      background: var(--color-bg-base);
-      padding: 20px;
-      overflow-y: auto;
-      flex-shrink: 0;
-    }
-
-    .sidebar-section-title {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--color-text-secondary);
-      letter-spacing: 0.2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .sidebar-info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--color-border-default);
-      font-size: 13px;
-    }
-    .sidebar-info-row:last-child { border-bottom: none; }
-    .sidebar-info-label { color: var(--color-text-secondary); }
-    .sidebar-info-value { color: var(--color-text-primary); font-weight: 500; }
-
-    /* ─── TRANSITION ──────────────────────────────────── */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .screen.active { animation: fadeIn 0.2s ease; }
+    /* Format painter cursor */
+    .format-painter-mode { cursor: crosshair !important; }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════
-     SCREEN 1: Кабинет студента
-══════════════════════════════════════════════════════ -->
+<!-- ═══════════════ SCREEN 1: Кабинет студента ═══════════════ -->
 <div id="screen-cabinet" class="screen active">
 
   <header class="header">
     <div class="header-left" onclick="goTo('cabinet')">
-      <!-- AP Shield Logo -->
-      <svg class="logo-shield" viewBox="0 0 36 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="logo-shield" viewBox="0 0 36 40" fill="none">
         <path d="M18 0L36 6.5V20C36 30.5 28 37.5 18 40C8 37.5 0 30.5 0 20V6.5L18 0Z" fill="#216CFF"/>
-        <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="12" font-weight="700" letter-spacing="-0.5">АП</text>
+        <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="12" font-weight="700" letter-spacing="-0.5">АП</text>
       </svg>
       <span class="header-brand">АНТИПЛАГИАТ</span>
     </div>
@@ -718,18 +418,11 @@
     <div class="title-row">
       <h1 class="page-title">Кабинет студента</h1>
       <div class="view-switcher">
-        <!-- List view (default active) -->
         <button class="view-btn active" id="btnList" title="Таблица" onclick="setView('list')">
-          <div class="list-icon">
-            <span></span><span></span><span></span>
-          </div>
+          <div class="list-icon"><span></span><span></span><span></span></div>
         </button>
-        <!-- Grid view -->
         <button class="view-btn" id="btnGrid" title="Сетка" onclick="setView('grid')">
-          <div class="grid-icon">
-            <span></span><span></span>
-            <span></span><span></span>
-          </div>
+          <div class="grid-icon"><span></span><span></span><span></span><span></span></div>
         </button>
       </div>
     </div>
@@ -744,206 +437,89 @@
         <div class="th col-action"></div>
       </div>
       <div class="table-body">
-
-        <div class="table-row" onclick="openEditor('Курсовая работа — Анализ данных', 'Иванов И.И.', '09.04.2026', 'Проверяется', '3')">
+        <div class="table-row" onclick="openEditor('Курсовая работа — Анализ данных','Иванов И.И.','09.04.2026','Проверяется','3')">
           <div class="td col-name"><span>Курсовая работа — Анализ данных</span></div>
           <div class="td col-teacher"><span>Иванов И.И.</span></div>
           <div class="td col-status"><span class="table-status-badge checking">Проверяется</span></div>
           <div class="td col-date">09.04.2026</div>
-          <div class="td col-action">
-            <button class="btn-goto" onclick="event.stopPropagation(); openEditor('Курсовая работа — Анализ данных','Иванов И.И.','09.04.2026','Проверяется','3')">Перейти к заданию</button>
-          </div>
+          <div class="td col-action"><button class="btn-goto" onclick="event.stopPropagation();openEditor('Курсовая работа — Анализ данных','Иванов И.И.','09.04.2026','Проверяется','3')">Перейти к заданию</button></div>
         </div>
-
-        <div class="table-row" onclick="openEditor('Дипломная работа — Машинное обучение', 'Петров А.С.', '05.04.2026', 'Завершено', '1')">
+        <div class="table-row" onclick="openEditor('Дипломная работа — Машинное обучение','Петров А.С.','05.04.2026','Завершено','1')">
           <div class="td col-name"><span>Дипломная работа — Машинное обучение</span></div>
           <div class="td col-teacher"><span>Петров А.С.</span></div>
           <div class="td col-status"><span class="table-status-badge done">Завершено</span></div>
           <div class="td col-date">05.04.2026</div>
-          <div class="td col-action">
-            <button class="btn-goto" onclick="event.stopPropagation(); openEditor('Дипломная работа — Машинное обучение','Петров А.С.','05.04.2026','Завершено','1')">Перейти к заданию</button>
-          </div>
+          <div class="td col-action"><button class="btn-goto" onclick="event.stopPropagation();openEditor('Дипломная работа — Машинное обучение','Петров А.С.','05.04.2026','Завершено','1')">Перейти к заданию</button></div>
         </div>
-
-        <div class="table-row" onclick="openEditor('Реферат — История ИИ', 'Сидорова Е.В.', '01.04.2026', 'Ошибка', '2')">
+        <div class="table-row" onclick="openEditor('Реферат — История ИИ','Сидорова Е.В.','01.04.2026','Отправлено на доработку','2')">
           <div class="td col-name"><span>Реферат — История ИИ</span></div>
           <div class="td col-teacher"><span>Сидорова Е.В.</span></div>
-          <div class="td col-status"><span class="table-status-badge error">Ошибка</span></div>
+          <div class="td col-status"><span class="table-status-badge rework">Отправлено на доработку</span></div>
           <div class="td col-date">01.04.2026</div>
-          <div class="td col-action">
-            <button class="btn-goto" onclick="event.stopPropagation(); openEditor('Реферат — История ИИ','Сидорова Е.В.','01.04.2026','Ошибка','2')">Перейти к заданию</button>
-          </div>
+          <div class="td col-action"><button class="btn-goto" onclick="event.stopPropagation();openEditor('Реферат — История ИИ','Сидорова Е.В.','01.04.2026','Отправлено на доработку','2')">Перейти к заданию</button></div>
         </div>
-
-        <div class="table-row" onclick="openEditor('Лабораторная — Статистика', 'Козлов Д.А.', '28.03.2026', 'Завершено', '1')">
+        <div class="table-row" onclick="openEditor('Лабораторная — Статистика','Козлов Д.А.','28.03.2026','Завершено','1')">
           <div class="td col-name"><span>Лабораторная — Статистика</span></div>
           <div class="td col-teacher"><span>Козлов Д.А.</span></div>
           <div class="td col-status"><span class="table-status-badge done">Завершено</span></div>
           <div class="td col-date">28.03.2026</div>
-          <div class="td col-action">
-            <button class="btn-goto" onclick="event.stopPropagation(); openEditor('Лабораторная — Статистика','Козлов Д.А.','28.03.2026','Завершено','1')">Перейти к заданию</button>
-          </div>
+          <div class="td col-action"><button class="btn-goto" onclick="event.stopPropagation();openEditor('Лабораторная — Статистика','Козлов Д.А.','28.03.2026','Завершено','1')">Перейти к заданию</button></div>
         </div>
-
-        <div class="table-row" onclick="openEditor('Эссе — Этика в технологиях', 'Морозова Н.К.', '25.03.2026', 'Проверяется', '1')">
+        <div class="table-row" onclick="openEditor('Эссе — Этика в технологиях','Морозова Н.К.','25.03.2026','Проверяется','1')">
           <div class="td col-name"><span>Эссе — Этика в технологиях</span></div>
           <div class="td col-teacher"><span>Морозова Н.К.</span></div>
           <div class="td col-status"><span class="table-status-badge checking">Проверяется</span></div>
           <div class="td col-date">25.03.2026</div>
-          <div class="td col-action">
-            <button class="btn-goto" onclick="event.stopPropagation(); openEditor('Эссе — Этика в технологиях','Морозова Н.К.','25.03.2026','Проверяется','1')">Перейти к заданию</button>
-          </div>
+          <div class="td col-action"><button class="btn-goto" onclick="event.stopPropagation();openEditor('Эссе — Этика в технологиях','Морозова Н.К.','25.03.2026','Проверяется','1')">Перейти к заданию</button></div>
         </div>
-
-        <div class="table-row" onclick="openEditor('Курсовая работа — Базы данных', 'Волков Р.О.', '20.03.2026', 'Завершено', '4')">
+        <div class="table-row" onclick="openEditor('Курсовая работа — Базы данных','Волков Р.О.','20.03.2026','Завершено','4')">
           <div class="td col-name"><span>Курсовая работа — Базы данных</span></div>
           <div class="td col-teacher"><span>Волков Р.О.</span></div>
           <div class="td col-status"><span class="table-status-badge done">Завершено</span></div>
           <div class="td col-date">20.03.2026</div>
-          <div class="td col-action">
-            <button class="btn-goto" onclick="event.stopPropagation(); openEditor('Курсовая работа — Базы данных','Волков Р.О.','20.03.2026','Завершено','4')">Перейти к заданию</button>
-          </div>
+          <div class="td col-action"><button class="btn-goto" onclick="event.stopPropagation();openEditor('Курсовая работа — Базы данных','Волков Р.О.','20.03.2026','Завершено','4')">Перейти к заданию</button></div>
         </div>
-
       </div>
     </div>
 
     <!-- CARD GRID VIEW (hidden by default) -->
     <div class="card-grid hidden" id="cardGrid">
-
-      <div class="card" onclick="openEditor('Курсовая работа — Анализ данных', 'Иванов И.И.', '09.04.2026', 'Проверяется', '3')">
-        <div class="card-top-row">
-          <p class="card-title">Курсовая работа — Анализ данных</p>
-          <button class="more-btn" onclick="event.stopPropagation()">···</button>
-        </div>
-        <div class="card-meta">
-          <span class="status-badge checking">Проверяется</span>
-          <span class="card-version">Версия 3</span>
-        </div>
-        <div class="card-info">
-          <div class="card-info-row">
-            <span class="info-label">Преподаватель:</span>
-            <span class="info-value">Иванов И.И.</span>
-          </div>
-          <div class="card-info-row">
-            <span class="info-label">Дата создания:</span>
-            <span class="info-value">09.04.2026</span>
-          </div>
-        </div>
+      <div class="card" onclick="openEditor('Курсовая работа — Анализ данных','Иванов И.И.','09.04.2026','Проверяется','3')">
+        <div class="card-top-row"><p class="card-title">Курсовая работа — Анализ данных</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
+        <div class="card-meta"><span class="status-badge checking">Проверяется</span><span class="card-version">Версия 3</span></div>
+        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Иванов И.И.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">09.04.2026</span></div></div>
       </div>
-
-      <div class="card" onclick="openEditor('Дипломная работа — Машинное обучение', 'Петров А.С.', '05.04.2026', 'Завершено', '1')">
-        <div class="card-top-row">
-          <p class="card-title">Дипломная работа — Машинное обучение</p>
-          <button class="more-btn" onclick="event.stopPropagation()">···</button>
-        </div>
-        <div class="card-meta">
-          <span class="status-badge done">Завершено</span>
-          <span class="card-version">Версия 1</span>
-        </div>
-        <div class="card-info">
-          <div class="card-info-row">
-            <span class="info-label">Преподаватель:</span>
-            <span class="info-value">Петров А.С.</span>
-          </div>
-          <div class="card-info-row">
-            <span class="info-label">Дата создания:</span>
-            <span class="info-value">05.04.2026</span>
-          </div>
-        </div>
+      <div class="card" onclick="openEditor('Дипломная работа — Машинное обучение','Петров А.С.','05.04.2026','Завершено','1')">
+        <div class="card-top-row"><p class="card-title">Дипломная работа — Машинное обучение</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
+        <div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 1</span></div>
+        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Петров А.С.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">05.04.2026</span></div></div>
       </div>
-
-      <div class="card" onclick="openEditor('Реферат — История ИИ', 'Сидорова Е.В.', '01.04.2026', 'Ошибка', '2')">
-        <div class="card-top-row">
-          <p class="card-title">Реферат — История ИИ</p>
-          <button class="more-btn" onclick="event.stopPropagation()">···</button>
-        </div>
-        <div class="card-meta">
-          <span class="status-badge error">Ошибка</span>
-          <span class="card-version">Версия 2</span>
-        </div>
-        <div class="card-info">
-          <div class="card-info-row">
-            <span class="info-label">Преподаватель:</span>
-            <span class="info-value">Сидорова Е.В.</span>
-          </div>
-          <div class="card-info-row">
-            <span class="info-label">Дата создания:</span>
-            <span class="info-value">01.04.2026</span>
-          </div>
-        </div>
+      <div class="card" onclick="openEditor('Реферат — История ИИ','Сидорова Е.В.','01.04.2026','Отправлено на доработку','2')">
+        <div class="card-top-row"><p class="card-title">Реферат — История ИИ</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
+        <div class="card-meta"><span class="status-badge rework">Отправлено на доработку</span><span class="card-version">Версия 2</span></div>
+        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Сидорова Е.В.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">01.04.2026</span></div></div>
       </div>
-
-      <div class="card" onclick="openEditor('Лабораторная — Статистика', 'Козлов Д.А.', '28.03.2026', 'Завершено', '1')">
-        <div class="card-top-row">
-          <p class="card-title">Лабораторная — Статистика</p>
-          <button class="more-btn" onclick="event.stopPropagation()">···</button>
-        </div>
-        <div class="card-meta">
-          <span class="status-badge done">Завершено</span>
-          <span class="card-version">Версия 1</span>
-        </div>
-        <div class="card-info">
-          <div class="card-info-row">
-            <span class="info-label">Преподаватель:</span>
-            <span class="info-value">Козлов Д.А.</span>
-          </div>
-          <div class="card-info-row">
-            <span class="info-label">Дата создания:</span>
-            <span class="info-value">28.03.2026</span>
-          </div>
-        </div>
+      <div class="card" onclick="openEditor('Лабораторная — Статистика','Козлов Д.А.','28.03.2026','Завершено','1')">
+        <div class="card-top-row"><p class="card-title">Лабораторная — Статистика</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
+        <div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 1</span></div>
+        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Козлов Д.А.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">28.03.2026</span></div></div>
       </div>
-
-      <div class="card" onclick="openEditor('Эссе — Этика в технологиях', 'Морозова Н.К.', '25.03.2026', 'Проверяется', '1')">
-        <div class="card-top-row">
-          <p class="card-title">Эссе — Этика в технологиях</p>
-          <button class="more-btn" onclick="event.stopPropagation()">···</button>
-        </div>
-        <div class="card-meta">
-          <span class="status-badge checking">Проверяется</span>
-          <span class="card-version">Версия 1</span>
-        </div>
-        <div class="card-info">
-          <div class="card-info-row">
-            <span class="info-label">Преподаватель:</span>
-            <span class="info-value">Морозова Н.К.</span>
-          </div>
-          <div class="card-info-row">
-            <span class="info-label">Дата создания:</span>
-            <span class="info-value">25.03.2026</span>
-          </div>
-        </div>
+      <div class="card" onclick="openEditor('Эссе — Этика в технологиях','Морозова Н.К.','25.03.2026','Проверяется','1')">
+        <div class="card-top-row"><p class="card-title">Эссе — Этика в технологиях</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
+        <div class="card-meta"><span class="status-badge checking">Проверяется</span><span class="card-version">Версия 1</span></div>
+        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Морозова Н.К.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">25.03.2026</span></div></div>
       </div>
-
-      <div class="card" onclick="openEditor('Курсовая работа — Базы данных', 'Волков Р.О.', '20.03.2026', 'Завершено', '4')">
-        <div class="card-top-row">
-          <p class="card-title">Курсовая работа — Базы данных</p>
-          <button class="more-btn" onclick="event.stopPropagation()">···</button>
-        </div>
-        <div class="card-meta">
-          <span class="status-badge done">Завершено</span>
-          <span class="card-version">Версия 4</span>
-        </div>
-        <div class="card-info">
-          <div class="card-info-row">
-            <span class="info-label">Преподаватель:</span>
-            <span class="info-value">Волков Р.О.</span>
-          </div>
-          <div class="card-info-row">
-            <span class="info-label">Дата создания:</span>
-            <span class="info-value">20.03.2026</span>
-          </div>
-        </div>
+      <div class="card" onclick="openEditor('Курсовая работа — Базы данных','Волков Р.О.','20.03.2026','Завершено','4')">
+        <div class="card-top-row"><p class="card-title">Курсовая работа — Базы данных</p><button class="more-btn" onclick="event.stopPropagation()">···</button></div>
+        <div class="card-meta"><span class="status-badge done">Завершено</span><span class="card-version">Версия 4</span></div>
+        <div class="card-info"><div class="card-info-row"><span class="info-label">Преподаватель:</span><span class="info-value">Волков Р.О.</span></div><div class="card-info-row"><span class="info-label">Дата создания:</span><span class="info-value">20.03.2026</span></div></div>
       </div>
-
     </div>
   </main>
 
   <footer class="footer">
     <div class="footer-links">
-      <a href="#">Помощь</a>
-      <a href="#">Контакты</a>
+      <a href="#">Помощь</a><a href="#">Контакты</a>
       <a href="#">Пользовательское соглашение</a>
       <a href="#">Соглашение о персональных данных</a>
       <a href="#">Маркетплейс</a>
@@ -951,163 +527,814 @@
     <div class="footer-right">
       <span class="footer-copy">АО «Антиплагиат» 2005–2026 © Все права защищены</span>
       <div class="social-icons">
-        <!-- Telegram -->
-        <a href="#" class="social-icon" title="Telegram">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="12" fill="#229ED9"/>
-            <path d="M5.5 11.8L17.2 7.2C17.7 7 18.1 7.3 17.9 7.9L15.9 17.1C15.8 17.6 15.4 17.7 15.1 17.5L12.3 15.4L11 16.7C10.8 16.9 10.6 17 10.4 17L10.6 14.1L15.5 9.7C15.7 9.5 15.5 9.4 15.2 9.6L9.1 13.5L6.4 12.7C5.9 12.5 5.9 12.1 5.5 11.8Z" fill="white"/>
-          </svg>
-        </a>
-        <!-- VK -->
-        <a href="#" class="social-icon" title="ВКонтакте">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <rect width="24" height="24" rx="6" fill="#0077FF"/>
-            <path d="M12.9 16H11.7C11.7 16 11.4 15.97 11.2 15.8C11.05 15.66 11.05 15.4 11.05 15.4C11.05 15.4 11.02 14.3 10.5 14.13C9.98 13.96 9.3 15.07 9.3 15.07C9.3 15.07 8.7 16 7.8 16H6.5C6.5 16 5.7 15.95 6.2 15.35C6.2 15.35 6.6 14.95 7.15 14.1C7.7 13.25 7.6 13.1 7.35 12.7C7.1 12.3 6.4 11.1 6.2 10.45C6 9.8 6.3 9.5 6.7 9.5H8C8 9.5 8.3 9.5 8.5 9.7C8.65 9.87 8.75 10.25 8.75 10.25C8.75 10.25 9.05 11.3 9.5 11.9C9.95 12.5 10.2 12.55 10.4 12.45C10.65 12.3 10.55 11.4 10.55 11.4C10.55 11.4 10.58 10.67 10.35 10.35C10.17 10.1 9.8 10.03 9.65 10.01C9.5 9.99 9.75 9.65 10.1 9.57C10.55 9.47 11.45 9.45 12.3 9.45C12.95 9.45 13.1 9.5 13.3 9.55C13.65 9.65 13.6 9.93 13.55 10.65C13.5 11.37 13.45 12.25 13.75 12.45C13.95 12.58 14.35 12.25 14.9 11.3C15.45 10.35 15.7 9.7 15.7 9.7C15.7 9.7 15.85 9.5 16.1 9.5H17.5C17.5 9.5 18.2 9.43 18.05 9.95C18.05 9.95 17.75 10.7 17 11.7C16.25 12.7 16.2 12.7 16.55 13.05C16.9 13.4 17.8 14.25 17.8 14.25C17.8 14.25 18.5 15 17.7 15.95C17.7 15.95 17.45 16 17 16H15.6C15.6 16 15.25 16.02 14.85 15.75C14.45 15.48 14.1 15 14.1 15C14.1 15 13.55 14.2 13.2 14.1C12.9 14 12.9 14.4 12.9 14.4V15.45C12.9 15.45 12.9 16 12.9 16Z" fill="white"/>
-          </svg>
-        </a>
-        <!-- YouTube -->
-        <a href="#" class="social-icon" title="YouTube">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <rect width="24" height="24" rx="6" fill="#FF0000"/>
-            <path d="M17.8 9.2C17.6 8.5 17.1 8 16.4 7.8C15.1 7.5 12 7.5 12 7.5C12 7.5 8.9 7.5 7.6 7.8C6.9 8 6.4 8.5 6.2 9.2C6 10.5 6 12 6 12C6 12 6 13.5 6.2 14.8C6.4 15.5 6.9 16 7.6 16.2C8.9 16.5 12 16.5 12 16.5C12 16.5 15.1 16.5 16.4 16.2C17.1 16 17.6 15.5 17.8 14.8C18 13.5 18 12 18 12C18 12 18 10.5 17.8 9.2ZM10.5 14V10L13.7 12L10.5 14Z" fill="white"/>
-          </svg>
-        </a>
-        <!-- Dzen -->
-        <a href="#" class="social-icon" title="Дзен">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="12" fill="#080808"/>
-            <path d="M12 4C12 4 11.8 8.5 10.5 9.8C9.2 11.1 4.5 12 4.5 12C4.5 12 9.2 12.9 10.5 14.2C11.8 15.5 12 20 12 20C12 20 12.2 15.5 13.5 14.2C14.8 12.9 19.5 12 19.5 12C19.5 12 14.8 11.1 13.5 9.8C12.2 8.5 12 4 12 4Z" fill="white"/>
-          </svg>
-        </a>
+        <a href="#" class="social-icon" title="Telegram"><svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#229ED9"/><path d="M5.5 11.8L17.2 7.2C17.7 7 18.1 7.3 17.9 7.9L15.9 17.1C15.8 17.6 15.4 17.7 15.1 17.5L12.3 15.4L11 16.7C10.8 16.9 10.6 17 10.4 17L10.6 14.1L15.5 9.7C15.7 9.5 15.5 9.4 15.2 9.6L9.1 13.5L6.4 12.7C5.9 12.5 5.9 12.1 5.5 11.8Z" fill="white"/></svg></a>
+        <a href="#" class="social-icon" title="ВКонтакте"><svg width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#0077FF"/><path d="M12.9 16H11.7C11.7 16 11.4 15.97 11.2 15.8C11.05 15.66 11.05 15.4 11.05 15.4C11.05 15.4 11.02 14.3 10.5 14.13C9.98 13.96 9.3 15.07 9.3 15.07C9.3 15.07 8.7 16 7.8 16H6.5C6.5 16 5.7 15.95 6.2 15.35C6.2 15.35 6.6 14.95 7.15 14.1C7.7 13.25 7.6 13.1 7.35 12.7C7.1 12.3 6.4 11.1 6.2 10.45C6 9.8 6.3 9.5 6.7 9.5H8C8 9.5 8.3 9.5 8.5 9.7C8.65 9.87 8.75 10.25 8.75 10.25C8.75 10.25 9.05 11.3 9.5 11.9C9.95 12.5 10.2 12.55 10.4 12.45C10.65 12.3 10.55 11.4 10.55 11.4C10.55 11.4 10.58 10.67 10.35 10.35C10.17 10.1 9.8 10.03 9.65 10.01C9.5 9.99 9.75 9.65 10.1 9.57C10.55 9.47 11.45 9.45 12.3 9.45C12.95 9.45 13.1 9.5 13.3 9.55C13.65 9.65 13.6 9.93 13.55 10.65C13.5 11.37 13.45 12.25 13.75 12.45C13.95 12.58 14.35 12.25 14.9 11.3C15.45 10.35 15.7 9.7 15.7 9.7C15.7 9.7 15.85 9.5 16.1 9.5H17.5C17.5 9.5 18.2 9.43 18.05 9.95C18.05 9.95 17.75 10.7 17 11.7C16.25 12.7 16.2 12.7 16.55 13.05C16.9 13.4 17.8 14.25 17.8 14.25C17.8 14.25 18.5 15 17.7 15.95C17.7 15.95 17.45 16 17 16H15.6C15.6 16 15.25 16.02 14.85 15.75C14.45 15.48 14.1 15 14.1 15C14.1 15 13.55 14.2 13.2 14.1C12.9 14 12.9 14.4 12.9 14.4V15.45C12.9 15.45 12.9 16 12.9 16Z" fill="white"/></svg></a>
+        <a href="#" class="social-icon" title="YouTube"><svg width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#FF0000"/><path d="M17.8 9.2C17.6 8.5 17.1 8 16.4 7.8C15.1 7.5 12 7.5 12 7.5C12 7.5 8.9 7.5 7.6 7.8C6.9 8 6.4 8.5 6.2 9.2C6 10.5 6 12 6 12C6 12 6 13.5 6.2 14.8C6.4 15.5 6.9 16 7.6 16.2C8.9 16.5 12 16.5 12 16.5C12 16.5 15.1 16.5 16.4 16.2C17.1 16 17.6 15.5 17.8 14.8C18 13.5 18 12 18 12C18 12 18 10.5 17.8 9.2ZM10.5 14V10L13.7 12L10.5 14Z" fill="white"/></svg></a>
+        <a href="#" class="social-icon" title="Дзен"><svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#080808"/><path d="M12 4C12 4 11.8 8.5 10.5 9.8C9.2 11.1 4.5 12 4.5 12C4.5 12 9.2 12.9 10.5 14.2C11.8 15.5 12 20 12 20C12 20 12.2 15.5 13.5 14.2C14.8 12.9 19.5 12 19.5 12C19.5 12 14.8 11.1 13.5 9.8C12.2 8.5 12 4 12 4Z" fill="white"/></svg></a>
       </div>
     </div>
   </footer>
-
 </div>
 
 
-<!-- ═══════════════════════════════════════════════════
-     SCREEN 2: Редактор
-══════════════════════════════════════════════════════ -->
+<!-- ═══════════════ SCREEN 2: Редактор ═══════════════ -->
 <div id="screen-editor" class="screen">
 
-  <header class="header">
-    <div class="header-left" onclick="goTo('cabinet')">
-      <svg class="logo-shield" viewBox="0 0 36 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 0L36 6.5V20C36 30.5 28 37.5 18 40C8 37.5 0 30.5 0 20V6.5L18 0Z" fill="#216CFF"/>
-        <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="12" font-weight="700" letter-spacing="-0.5">АП</text>
-      </svg>
-      <span class="header-brand">АНТИПЛАГИАТ</span>
-    </div>
-    <div class="header-right">
-      <div class="header-user-info">
-        <span class="header-email">student@university.ru</span>
-        <span class="header-role">Студент</span>
-      </div>
-      <button class="btn-logout">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M6 14H3C2.45 14 2 13.55 2 13V3C2 2.45 2.45 2 3 2H6" stroke="#3C3C3C" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M10.5 11L14 8L10.5 5" stroke="#3C3C3C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M14 8H6" stroke="#3C3C3C" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Editor Header -->
+  <header class="ed-header">
+    <div class="ed-header-left">
+      <div class="ed-logo-btn" onclick="goTo('cabinet')" title="Вернуться в кабинет">
+        <svg width="24" height="28" viewBox="0 0 36 40" fill="none">
+          <path d="M18 0L36 6.5V20C36 30.5 28 37.5 18 40C8 37.5 0 30.5 0 20V6.5L18 0Z" fill="#216CFF"/>
+          <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="12" font-weight="700" letter-spacing="-0.5">АП</text>
         </svg>
-        Выход
-      </button>
+      </div>
+      <div class="ed-breadcrumb">
+        <div class="ed-breadcrumb-trail">
+          <span class="ed-breadcrumb-link" onclick="goTo('cabinet')">Кабинет студента</span>
+          <span class="ed-breadcrumb-sep">/</span>
+          <span class="ed-breadcrumb-link" id="edBreadcrumbTitle">Документ</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="ed-doc-title" id="edDocTitle">Документ</span>
+          <span class="ed-save-status"><span class="ed-save-check">✓</span> Сохранено</span>
+        </div>
+      </div>
+    </div>
+    <div class="ed-header-right">
+      <!-- Version selector -->
+      <div class="tb-select-wrap">
+        <button class="ed-btn ed-btn-version" onclick="toggleDropdown('versionDropdown')">
+          <span id="versionLabel">Версия 1</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#3C3C3C" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="tb-dropdown" id="versionDropdown">
+          <div class="tb-dropdown-item active">Версия 1 (текущая)</div>
+          <div class="tb-dropdown-item" onclick="closeAllDropdowns()">Версия 2</div>
+          <div class="tb-dropdown-item" onclick="closeAllDropdowns()">Версия 3</div>
+        </div>
+      </div>
+      <div class="ed-header-divider"></div>
+      <button class="ed-btn">Экспорт</button>
+      <button class="ed-btn ed-btn-primary">Отправить на проверку</button>
     </div>
   </header>
 
-  <div class="editor-toolbar">
-    <div class="toolbar-left">
-      <button class="back-btn" onclick="goTo('cabinet')">← Мои работы</button>
-      <div class="toolbar-divider"></div>
-      <span class="toolbar-doc-title" id="editorDocTitle">—</span>
+  <!-- Toolbar wrapper: search + toolbar -->
+  <div class="ed-toolbar-wrapper">
+    <!-- Search panel (hidden by default) -->
+    <div class="search-panel" id="searchPanel">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#6B6B6B" stroke-width="1.3"/><path d="M9.5 9.5L12.5 12.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <input type="text" id="searchInput" placeholder="Найти в документе..." oninput="doSearch()" onkeydown="searchKeyNav(event)"/>
+      <span class="search-count" id="searchCount"></span>
+      <button class="search-nav-btn" onclick="navigateSearch(-1)" title="Предыдущее">▲</button>
+      <button class="search-nav-btn" onclick="navigateSearch(1)" title="Следующее">▼</button>
+      <button class="search-close-btn" onclick="closeSearch()">✕</button>
     </div>
-    <div class="toolbar-right">
-      <button class="btn btn-secondary">Сохранить</button>
-      <button class="btn btn-primary">Проверить</button>
-    </div>
+
+    <!-- Main toolbar -->
+    <div class="toolbar-row">
+
+      <!-- Search btn -->
+      <button class="tb-btn" id="btnSearchTool" onclick="toggleSearch()" title="Поиск (Ctrl+F)">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.8" stroke="#6B6B6B" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="tb-divider"></div>
+
+      <!-- Undo / Redo -->
+      <button class="tb-btn" onclick="exec('undo')" title="Отменить (Ctrl+Z)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H9.5C11.7 5.5 13.5 7.3 13.5 9.5C13.5 11.7 11.7 13.5 9.5 13.5H5.5" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/><path d="M5.5 2.5L2.5 5.5L5.5 8.5" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="tb-btn" onclick="exec('redo')" title="Повторить (Ctrl+Y)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 5.5H6.5C4.3 5.5 2.5 7.3 2.5 9.5C2.5 11.7 4.3 13.5 6.5 13.5H10.5" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/><path d="M10.5 2.5L13.5 5.5L10.5 8.5" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="tb-divider"></div>
+
+      <!-- Text style: Bold Italic Underline Strikethrough -->
+      <button class="tb-btn" id="btnBold" onclick="exec('bold')" title="Жирный (Ctrl+B)" style="font-weight:700;font-size:14px;">Ж</button>
+      <button class="tb-btn" id="btnItalic" onclick="exec('italic')" title="Курсив (Ctrl+I)" style="font-style:italic;font-size:14px;">К</button>
+      <button class="tb-btn" id="btnUnderline" onclick="exec('underline')" title="Подчёркнутый (Ctrl+U)" style="text-decoration:underline;font-size:14px;">Ч</button>
+      <button class="tb-btn" id="btnStrike" onclick="exec('strikeThrough')" title="Зачёркнутый" style="text-decoration:line-through;font-size:14px;">С</button>
+
+      <!-- Text color -->
+      <div class="tb-color-wrap">
+        <button class="tb-color-btn" onclick="document.getElementById('textColorPicker').click()" title="Цвет текста">
+          <span class="tb-color-label">A</span>
+          <span class="tb-color-swatch" id="textColorSwatch" style="background:#3C3C3C"></span>
+        </button>
+        <input type="color" id="textColorPicker" class="hidden-color" value="#3C3C3C" onchange="applyTextColor(this.value)">
+      </div>
+
+      <!-- Underline color -->
+      <div class="tb-color-wrap">
+        <button class="tb-color-btn" onclick="document.getElementById('underlineColorPicker').click()" title="Цвет подчёркивания">
+          <span class="tb-color-label" style="text-decoration:underline;">Ч</span>
+          <span class="tb-color-swatch" id="underlineColorSwatch" style="background:#3C3C3C"></span>
+        </button>
+        <input type="color" id="underlineColorPicker" class="hidden-color" value="#3C3C3C" onchange="applyUnderlineColor(this.value)">
+      </div>
+
+      <div class="tb-divider"></div>
+
+      <!-- Heading type -->
+      <div class="tb-select-wrap">
+        <div class="tb-select-trigger" id="headingTrigger" onclick="toggleDropdown('headingDropdown')" style="width:148px;">
+          <span id="headingLabel">Обычный текст</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tb-dropdown" id="headingDropdown" style="width:200px;">
+          <div class="tb-dropdown-item" style="font-size:20px;font-weight:700;" onclick="setHeading('h1','Основной заголовок')">Основной заголовок</div>
+          <div class="tb-dropdown-item" style="font-size:17px;font-weight:700;" onclick="setHeading('h2','Заголовок 1')">Заголовок 1</div>
+          <div class="tb-dropdown-item" style="font-size:15px;font-weight:700;" onclick="setHeading('h3','Заголовок 2')">Заголовок 2</div>
+          <div class="tb-dropdown-item" style="font-size:13px;font-weight:700;" onclick="setHeading('h4','Заголовок 3')">Заголовок 3</div>
+          <div class="tb-dropdown-item" style="font-style:italic;" onclick="setHeading('h5','Подзаголовок')">Подзаголовок</div>
+          <div class="tb-dropdown-item active" onclick="setHeading('p','Обычный текст')">Обычный текст</div>
+        </div>
+      </div>
+
+      <div class="tb-divider"></div>
+
+      <!-- Font family -->
+      <div class="tb-select-wrap">
+        <div class="tb-select-trigger" id="fontFamilyTrigger" onclick="toggleDropdown('fontFamilyDropdown')" style="width:116px;">
+          <span id="fontFamilyLabel">Times NR</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#6B6B6B" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tb-dropdown" id="fontFamilyDropdown" style="width:200px;">
+          <div class="tb-dropdown-item active" style="font-family:'Times New Roman',serif" onclick="setFontFamily('Times New Roman','Times NR')">Times New Roman</div>
+          <div class="tb-dropdown-item" style="font-family:Arial,sans-serif" onclick="setFontFamily('Arial','Arial')">Arial</div>
+          <div class="tb-dropdown-item" style="font-family:'Courier New',monospace" onclick="setFontFamily('Courier New','Courier New')">Courier New</div>
+          <div class="tb-dropdown-item" style="font-family:Georgia,serif" onclick="setFontFamily('Georgia','Georgia')">Georgia</div>
+          <div class="tb-dropdown-item" style="font-family:Verdana,sans-serif" onclick="setFontFamily('Verdana','Verdana')">Verdana</div>
+          <div class="tb-dropdown-item" style="font-family:'Inter',sans-serif" onclick="setFontFamily('Inter','Inter')">Inter</div>
+        </div>
+      </div>
+
+      <!-- Font size -->
+      <input type="number" class="tb-num-input" id="fontSizeInput" value="14" min="6" max="96" onchange="applyFontSize(this.value)" title="Размер шрифта"/>
+
+      <div class="tb-divider"></div>
+
+      <!-- Line spacing -->
+      <input type="number" class="tb-num-input" id="lineSpacingInput" value="1.5" min="0.5" max="4" step="0.1" onchange="applyLineSpacing(this.value)" title="Межстрочный интервал"/>
+
+      <!-- Superscript / Subscript -->
+      <button class="tb-btn" id="btnSup" onclick="exec('superscript')" title="Верхний индекс" style="font-size:12px;">x²</button>
+      <button class="tb-btn" id="btnSub" onclick="exec('subscript')" title="Нижний индекс" style="font-size:12px;">x₂</button>
+
+      <div class="tb-divider"></div>
+
+      <!-- Lists -->
+      <button class="tb-btn" id="btnOL" onclick="exec('insertOrderedList')" title="Нумерованный список">
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="none"><text x="0" y="5" font-size="5" fill="#6B6B6B" font-family="Inter,sans-serif">1.</text><text x="0" y="9.5" font-size="5" fill="#6B6B6B" font-family="Inter,sans-serif">2.</text><text x="0" y="14" font-size="5" fill="#6B6B6B" font-family="Inter,sans-serif">3.</text><line x1="6" y1="3.5" x2="16" y2="3.5" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/><line x1="6" y1="8" x2="16" y2="8" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/><line x1="6" y1="12.5" x2="16" y2="12.5" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="tb-btn" id="btnUL" onclick="exec('insertUnorderedList')" title="Маркированный список">
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="none"><circle cx="2" cy="3.5" r="1.5" fill="#6B6B6B"/><circle cx="2" cy="8" r="1.5" fill="#6B6B6B"/><circle cx="2" cy="12.5" r="1.5" fill="#6B6B6B"/><line x1="6" y1="3.5" x2="16" y2="3.5" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/><line x1="6" y1="8" x2="16" y2="8" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/><line x1="6" y1="12.5" x2="16" y2="12.5" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+
+      <!-- Indent -->
+      <button class="tb-btn" onclick="exec('outdent')" title="Уменьшить отступ">
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M5 3.5L2 7L5 10.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="1" x2="14" y2="1" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/><line x1="7" y1="7" x2="14" y2="7" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/><line x1="2" y1="13" x2="14" y2="13" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="tb-btn" onclick="exec('indent')" title="Увеличить отступ">
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M4 3.5L7 7L4 10.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="1" x2="14" y2="1" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/><line x1="9" y1="7" x2="14" y2="7" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/><line x1="2" y1="13" x2="14" y2="13" stroke="#6B6B6B" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+
+      <!-- Insert link -->
+      <button class="tb-btn" onclick="insertLink()" title="Добавить ссылку (Ctrl+K)">
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M6 9.5L4.5 11C3.5 12 2 12 1 11C0 10 0 8.5 1 7.5L3.5 5C4.5 4 6 4 7 5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><path d="M10 4.5L11.5 3C12.5 2 14 2 15 3C16 4 16 5.5 15 6.5L12.5 9C11.5 10 10 10 9 9" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="5.5" y1="8.5" x2="10.5" y2="5.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="tb-divider"></div>
+
+      <!-- Alignment -->
+      <button class="tb-btn" id="btnAlignLeft" onclick="exec('justifyLeft')" title="По левому краю">
+        <svg width="16" height="13" viewBox="0 0 16 13" fill="none"><line x1="1" y1="1.5" x2="15" y2="1.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="1" y1="5" x2="11" y2="5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="1" y1="8.5" x2="15" y2="8.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="1" y1="12" x2="9" y2="12" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+      <button class="tb-btn" id="btnAlignCenter" onclick="exec('justifyCenter')" title="По центру">
+        <svg width="16" height="13" viewBox="0 0 16 13" fill="none"><line x1="1" y1="1.5" x2="15" y2="1.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="3" y1="5" x2="13" y2="5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="1" y1="8.5" x2="15" y2="8.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="4" y1="12" x2="12" y2="12" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+      <button class="tb-btn" id="btnAlignRight" onclick="exec('justifyRight')" title="По правому краю">
+        <svg width="16" height="13" viewBox="0 0 16 13" fill="none"><line x1="1" y1="1.5" x2="15" y2="1.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="5" y1="5" x2="15" y2="5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="1" y1="8.5" x2="15" y2="8.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="7" y1="12" x2="15" y2="12" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="tb-divider"></div>
+
+      <!-- Format painter & Clear format -->
+      <button class="tb-btn" id="btnFormatPainter" onclick="activateFormatPainter()" title="Скопировать форматирование">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="7" width="8" height="7" rx="1" stroke="#6B6B6B" stroke-width="1.3"/><path d="M9 10H13C13.6 10 14 9.6 14 9V3C14 2.4 13.6 2 13 2H5C4.4 2 4 2.4 4 3V7" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+      <button class="tb-btn" onclick="exec('removeFormat')" title="Очистить форматирование">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 13L6 9M6 9L10 5M6 9L2 5M10 5L13 2M10 5L13 8" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="tb-divider"></div>
+
+      <!-- Insert table -->
+      <button class="tb-btn" onclick="showInsertTablePicker()" title="Вставить таблицу">
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="none"><rect x="1" y="1" width="14" height="12" rx="1.5" stroke="#6B6B6B" stroke-width="1.3"/><line x1="1" y1="5" x2="15" y2="5" stroke="#6B6B6B" stroke-width="1.1"/><line x1="1" y1="9" x2="15" y2="9" stroke="#6B6B6B" stroke-width="1.1"/><line x1="6" y1="1" x2="6" y2="13" stroke="#6B6B6B" stroke-width="1.1"/><line x1="11" y1="1" x2="11" y2="13" stroke="#6B6B6B" stroke-width="1.1"/></svg>
+      </button>
+
+      <!-- Insert footnote -->
+      <button class="tb-btn" onclick="insertFootnote()" title="Вставить сноску">
+        <svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 2C2 2 4 0.5 6 2C8 3.5 10 2 10 2" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><path d="M2 6.5C2 6.5 4 5 6 6.5C8 8 10 6.5 10 6.5" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="12" y1="4" x2="12" y2="13" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><line x1="9" y1="13" x2="15" y2="13" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+
+      <!-- Page break -->
+      <button class="tb-btn" onclick="insertPageBreak()" title="Разрыв страницы">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="1" y1="5" x2="13" y2="5" stroke="#6B6B6B" stroke-width="1.2" stroke-dasharray="2 1.5" stroke-linecap="round"/><line x1="1" y1="9" x2="13" y2="9" stroke="#6B6B6B" stroke-width="1.2" stroke-dasharray="2 1.5" stroke-linecap="round"/><path d="M7 10V13" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><path d="M5 12L7 14L9 12" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 4V1" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round"/><path d="M9 3L7 1L5 3" stroke="#6B6B6B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+    </div><!-- end toolbar-row -->
+  </div><!-- end toolbar-wrapper -->
+
+  <!-- Table insert size picker (hidden popup) -->
+  <div id="tablePicker" style="display:none;position:fixed;z-index:300;background:white;border:1px solid #E4E4E4;border-radius:10px;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,0.12);">
+    <div style="font-size:12px;color:#6B6B6B;margin-bottom:8px;">Размер таблицы</div>
+    <div id="tablePickerGrid" style="display:grid;grid-template-columns:repeat(6,20px);gap:3px;"></div>
+    <div id="tablePickerLabel" style="font-size:11px;color:#6B6B6B;margin-top:6px;text-align:center;">0 × 0</div>
   </div>
 
-  <div class="editor-body">
-    <div class="editor-canvas">
-      <div class="editor-page">
-        <input class="editor-doc-title-input" id="editorTitleInput" placeholder="Название работы..." />
-        <div class="editor-page-content">
-          <p class="editor-placeholder-hint">Начните вводить текст работы</p>
-          <p class="editor-placeholder-sub">Это заглушка редактора. В финальном продукте здесь будет полноценный текстовый редактор.</p>
+  <!-- Table context menu -->
+  <div class="table-ctx-menu" id="tableCtxMenu">
+    <div class="ctx-item" onclick="tableAction('addRowAbove')">Добавить строку выше</div>
+    <div class="ctx-item" onclick="tableAction('addRowBelow')">Добавить строку ниже</div>
+    <div class="ctx-item danger" onclick="tableAction('deleteRow')">Удалить строку</div>
+    <div class="ctx-separator"></div>
+    <div class="ctx-item" onclick="tableAction('addColLeft')">Добавить столбец слева</div>
+    <div class="ctx-item" onclick="tableAction('addColRight')">Добавить столбец справа</div>
+    <div class="ctx-item danger" onclick="tableAction('deleteCol')">Удалить столбец</div>
+    <div class="ctx-separator"></div>
+    <div class="ctx-item" onclick="tableAction('alignLeft')">Выравнивание: по левому краю</div>
+    <div class="ctx-item" onclick="tableAction('alignCenter')">Выравнивание: по центру</div>
+    <div class="ctx-item" onclick="tableAction('alignRight')">Выравнивание: по правому краю</div>
+  </div>
+
+  <!-- Main content area -->
+  <div class="ed-main">
+    <!-- Document canvas -->
+    <div class="doc-canvas" id="docCanvas">
+      <div class="doc-page">
+        <!-- Suggestion chips on empty doc -->
+        <div class="doc-suggestion-chips" id="docSuggestionChips">
+          <div class="doc-chip" onclick="aiPrompt('Составь план')">Составь план</div>
+          <div class="doc-chip" onclick="aiPrompt('Помоги с оформлением')">Помоги с оформлением</div>
+          <div class="doc-chip" onclick="aiPrompt('Подбери источники')">Подбери источники</div>
+          <div class="doc-chip" onclick="aiPrompt('Генерация идей')">Генерация идей</div>
+        </div>
+        <!-- Editable area -->
+        <div id="editorContent" contenteditable="true" data-placeholder="Начните вводить текст..."></div>
+      </div>
+    </div>
+
+    <!-- AI sidebar -->
+    <div class="ai-sidebar" id="aiSidebar">
+      <div class="ai-panel">
+        <div class="ai-header">
+          <span class="ai-header-title">ИИ-помощник</span>
+          <button class="ai-close-btn" onclick="toggleAI()" title="Свернуть">✕</button>
+        </div>
+        <div class="ai-messages" id="aiMessages">
+          <div class="ai-welcome-title">👋 С чего начать?</div>
+          <div class="ai-welcome-sub">Вот несколько идей, которые помогут вам начать работу над документом:</div>
+          <div class="suggestion-card" onclick="aiPrompt('Создайте структуру')">
+            <div class="suggestion-icon">📝</div>
+            <div class="suggestion-text"><div class="suggestion-title">Создайте структуру</div><div class="suggestion-desc">Начните с плана: введение, главы, заключение. ИИ-помощник подскажет оптимальный порядок</div></div>
+          </div>
+          <div class="suggestion-card" onclick="aiPrompt('Сформулируйте тезисы')">
+            <div class="suggestion-icon">🎯</div>
+            <div class="suggestion-text"><div class="suggestion-title">Сформулируйте тезисы</div><div class="suggestion-desc">Определите ключевые аргументы и гипотезы вашей работы</div></div>
+          </div>
+          <div class="suggestion-card" onclick="aiPrompt('Добавьте источники')">
+            <div class="suggestion-icon">📚</div>
+            <div class="suggestion-text"><div class="suggestion-title">Добавьте источники</div><div class="suggestion-desc">Вставьте цитаты и оформите список литературы по стандарту</div></div>
+          </div>
+          <div class="suggestion-card" onclick="aiPrompt('Вставьте данные')">
+            <div class="suggestion-icon">📊</div>
+            <div class="suggestion-text"><div class="suggestion-title">Вставьте данные</div><div class="suggestion-desc">Добавьте таблицы, графики или диаграммы для наглядности</div></div>
+          </div>
+          <div class="suggestion-card" onclick="aiPrompt('Оформите по ГОСТу')">
+            <div class="suggestion-icon">📐</div>
+            <div class="suggestion-text"><div class="suggestion-title">Оформите по ГОСТу</div><div class="suggestion-desc">Настройте поля, шрифт, интервалы и нумерацию страниц</div></div>
+          </div>
+          <div class="suggestion-card" onclick="aiPrompt('Спросите ИИ-помощника')">
+            <div class="suggestion-icon">✨</div>
+            <div class="suggestion-text"><div class="suggestion-title">Спросите ИИ-помощника</div><div class="suggestion-desc">Задайте любой вопрос — помощник поможет с текстом, идеями и проверкой</div></div>
+          </div>
+        </div>
+        <div class="ai-chips">
+          <div class="ai-chip" onclick="aiPrompt('Составь план')">Составь план</div>
+          <div class="ai-chip" onclick="aiPrompt('Помоги с оформлением')">Помоги с оформлением</div>
+          <div class="ai-chip" onclick="aiPrompt('Подбери источники')">Подбери источники</div>
+          <div class="ai-chip" onclick="aiPrompt('Генерация идей')">Генерация идей</div>
+        </div>
+        <div class="ai-input-area">
+          <div class="ai-input-row">
+            <input type="text" id="aiInputField" placeholder="Задайте вопрос..." onkeydown="if(event.key==='Enter')sendAiMessage()"/>
+            <button class="ai-send-btn" onclick="sendAiMessage()">➤</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <aside class="editor-sidebar">
-      <p class="sidebar-section-title">Информация</p>
-      <div class="sidebar-info-row">
-        <span class="sidebar-info-label">Статус</span>
-        <span class="sidebar-info-value" id="sidebarStatus">—</span>
+    <!-- Right toggle strip -->
+    <div class="right-toggle ai-open" id="rightToggle">
+      <div class="toggle-row ai-active" onclick="toggleAI()" id="toggleAIRow">
+        <div class="toggle-icon">✦</div>
+        <span class="toggle-label">ИИ-помощник</span>
       </div>
-      <div class="sidebar-info-row">
-        <span class="sidebar-info-label">Версия</span>
-        <span class="sidebar-info-value" id="sidebarVersion">—</span>
+      <div class="toggle-row" onclick="alert('Комментарии: скоро будет доступно')">
+        <div class="toggle-icon">💬</div>
+        <span class="toggle-label">Обсуждение</span>
       </div>
-      <div class="sidebar-info-row">
-        <span class="sidebar-info-label">Преподаватель</span>
-        <span class="sidebar-info-value" id="sidebarTeacher">—</span>
-      </div>
-      <div class="sidebar-info-row">
-        <span class="sidebar-info-label">Создан</span>
-        <span class="sidebar-info-value" id="sidebarDate">—</span>
-      </div>
-    </aside>
-  </div>
+    </div>
+  </div><!-- ed-main -->
 
-</div>
+</div><!-- screen-editor -->
 
 
 <script>
-  // ─── Navigation ────────────────────────────────────
-  function goTo(screenName) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-' + screenName).classList.add('active');
-    window.scrollTo(0, 0);
+// ─── Navigation ────────────────────────────────────────────
+function goTo(screenName) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + screenName).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function openEditor(title, teacher, date, status, version) {
+  document.getElementById('edDocTitle').textContent = title;
+  document.getElementById('edBreadcrumbTitle').textContent = title;
+  goTo('editor');
+  setTimeout(() => { document.getElementById('editorContent').focus(); }, 50);
+}
+
+// ─── Cabinet view switcher ─────────────────────────────────
+function setView(view) {
+  const isList = view === 'list';
+  document.getElementById('tableView').classList.toggle('hidden', !isList);
+  document.getElementById('cardGrid').classList.toggle('hidden', isList);
+  document.getElementById('btnList').classList.toggle('active', isList);
+  document.getElementById('btnGrid').classList.toggle('active', !isList);
+}
+
+// ─── Exec command helper ───────────────────────────────────
+const edEl = () => document.getElementById('editorContent');
+
+function exec(cmd, value) {
+  edEl().focus();
+  document.execCommand(cmd, false, value || null);
+  updateToolbarState();
+}
+
+// ─── Toolbar state sync ────────────────────────────────────
+function updateToolbarState() {
+  const states = {
+    btnBold: 'bold', btnItalic: 'italic', btnUnderline: 'underline',
+    btnStrike: 'strikeThrough', btnSup: 'superscript', btnSub: 'subscript',
+  };
+  for (const [id, cmd] of Object.entries(states)) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', document.queryCommandState(cmd));
   }
+  // Alignment
+  document.getElementById('btnAlignLeft').classList.toggle('active', document.queryCommandState('justifyLeft'));
+  document.getElementById('btnAlignCenter').classList.toggle('active', document.queryCommandState('justifyCenter'));
+  document.getElementById('btnAlignRight').classList.toggle('active', document.queryCommandState('justifyRight'));
+  // OL/UL
+  document.getElementById('btnOL').classList.toggle('active', document.queryCommandState('insertOrderedList'));
+  document.getElementById('btnUL').classList.toggle('active', document.queryCommandState('insertUnorderedList'));
+}
 
-  // ─── View switcher ─────────────────────────────────
-  function setView(view) {
-    const tableView = document.getElementById('tableView');
-    const cardGrid  = document.getElementById('cardGrid');
-    const btnList   = document.getElementById('btnList');
-    const btnGrid   = document.getElementById('btnGrid');
+document.getElementById('editorContent').addEventListener('keyup', updateToolbarState);
+document.getElementById('editorContent').addEventListener('mouseup', updateToolbarState);
 
-    if (view === 'list') {
-      tableView.classList.remove('hidden');
-      cardGrid.classList.add('hidden');
-      btnList.classList.add('active');
-      btnGrid.classList.remove('active');
-    } else {
-      cardGrid.classList.remove('hidden');
-      tableView.classList.add('hidden');
-      btnGrid.classList.add('active');
-      btnList.classList.remove('active');
+// ─── Dropdowns ─────────────────────────────────────────────
+function toggleDropdown(id) {
+  const el = document.getElementById(id);
+  const wasOpen = el.classList.contains('open');
+  closeAllDropdowns();
+  if (!wasOpen) el.classList.add('open');
+}
+function closeAllDropdowns() {
+  document.querySelectorAll('.tb-dropdown').forEach(d => d.classList.remove('open'));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.tb-select-wrap') && !e.target.closest('.ed-btn-version')) closeAllDropdowns();
+  if (!e.target.closest('#tablePicker') && !e.target.closest('.tb-btn[onclick*="showInsert"]')) hideTablePicker();
+  if (!e.target.closest('#tableCtxMenu')) closeCtxMenu();
+});
+
+// ─── Heading type ──────────────────────────────────────────
+function setHeading(tag, label) {
+  edEl().focus();
+  document.execCommand('formatBlock', false, tag);
+  document.getElementById('headingLabel').textContent = label;
+  closeAllDropdowns();
+  updateToolbarState();
+}
+
+// ─── Font family ───────────────────────────────────────────
+function setFontFamily(family, label) {
+  exec('fontName', family);
+  document.getElementById('fontFamilyLabel').textContent = label;
+  // Update active state in dropdown
+  document.querySelectorAll('#fontFamilyDropdown .tb-dropdown-item').forEach(el => {
+    el.classList.toggle('active', el.textContent.trim().startsWith(label));
+  });
+  closeAllDropdowns();
+}
+
+// ─── Font size ─────────────────────────────────────────────
+function applyFontSize(size) {
+  if (!size || size < 1) return;
+  edEl().focus();
+  document.execCommand('fontSize', false, '7');
+  edEl().querySelectorAll('font[size="7"]').forEach(el => {
+    el.removeAttribute('size');
+    el.style.fontSize = size + 'px';
+  });
+}
+
+// ─── Text color ────────────────────────────────────────────
+function applyTextColor(color) {
+  exec('foreColor', color);
+  document.getElementById('textColorSwatch').style.background = color;
+}
+
+// ─── Underline color ───────────────────────────────────────
+function applyUnderlineColor(color) {
+  document.getElementById('underlineColorSwatch').style.background = color;
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount || sel.isCollapsed) return;
+  const range = sel.getRangeAt(0);
+  const span = document.createElement('span');
+  span.style.textDecoration = 'underline';
+  span.style.textDecorationColor = color;
+  try {
+    range.surroundContents(span);
+  } catch(e) {
+    const frag = range.extractContents();
+    span.appendChild(frag);
+    range.insertNode(span);
+  }
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+// ─── Line spacing ──────────────────────────────────────────
+function applyLineSpacing(value) {
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+  let node = sel.anchorNode;
+  while (node && node !== edEl()) {
+    if (node.nodeType === 1 && /^(P|H[1-6]|LI|DIV|BLOCKQUOTE)$/.test(node.tagName)) {
+      node.style.lineHeight = value;
+      break;
+    }
+    node = node.parentNode;
+  }
+}
+
+// ─── Superscript / Subscript ───────────────────────────────
+// handled by exec()
+
+// ─── Format painter ────────────────────────────────────────
+let _formatPainterActive = false;
+let _copiedFormat = null;
+
+function activateFormatPainter() {
+  _copiedFormat = {
+    bold: document.queryCommandState('bold'),
+    italic: document.queryCommandState('italic'),
+    underline: document.queryCommandState('underline'),
+    strike: document.queryCommandState('strikeThrough'),
+    color: document.queryCommandValue('foreColor'),
+  };
+  _formatPainterActive = true;
+  document.getElementById('btnFormatPainter').classList.add('active-filled');
+  edEl().classList.add('format-painter-mode');
+  edEl().addEventListener('mouseup', applyFormatPainter, { once: true });
+}
+
+function applyFormatPainter() {
+  if (!_copiedFormat) return;
+  if (_copiedFormat.bold !== document.queryCommandState('bold')) exec('bold');
+  if (_copiedFormat.italic !== document.queryCommandState('italic')) exec('italic');
+  if (_copiedFormat.underline !== document.queryCommandState('underline')) exec('underline');
+  if (_copiedFormat.strike !== document.queryCommandState('strikeThrough')) exec('strikeThrough');
+  if (_copiedFormat.color) exec('foreColor', _copiedFormat.color);
+  _formatPainterActive = false;
+  _copiedFormat = null;
+  document.getElementById('btnFormatPainter').classList.remove('active-filled');
+  edEl().classList.remove('format-painter-mode');
+}
+
+// ─── Insert link ───────────────────────────────────────────
+function insertLink() {
+  const url = prompt('Введите URL ссылки:');
+  if (url) exec('createLink', url);
+  // Make links open in new tab
+  edEl().querySelectorAll('a').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
+}
+
+// ─── Insert footnote ───────────────────────────────────────
+let _footnoteCount = 0;
+function insertFootnote() {
+  _footnoteCount++;
+  exec('insertHTML', `<sup class="footnote-marker" title="Сноска ${_footnoteCount}">[${_footnoteCount}]</sup>`);
+}
+
+// ─── Insert page break ────────────────────────────────────
+function insertPageBreak() {
+  exec('insertHTML', '<div class="page-break" contenteditable="false">— Разрыв страницы —</div><p><br></p>');
+}
+
+// ─── Insert table picker ───────────────────────────────────
+let _pickerRows = 0, _pickerCols = 0;
+
+function showInsertTablePicker() {
+  const picker = document.getElementById('tablePicker');
+  const btn = document.querySelector('.tb-btn[onclick*="showInsertTablePicker"]');
+  const rect = btn.getBoundingClientRect();
+  picker.style.left = rect.left + 'px';
+  picker.style.top = (rect.bottom + 6) + 'px';
+  picker.style.display = 'block';
+  buildPickerGrid();
+}
+
+function buildPickerGrid() {
+  const grid = document.getElementById('tablePickerGrid');
+  grid.innerHTML = '';
+  for (let r = 1; r <= 6; r++) {
+    for (let c = 1; c <= 6; c++) {
+      const cell = document.createElement('div');
+      cell.style.cssText = `width:20px;height:20px;border:1px solid #E4E4E4;border-radius:3px;cursor:pointer;transition:background 0.1s;`;
+      cell.dataset.r = r; cell.dataset.c = c;
+      cell.addEventListener('mouseover', () => highlightPicker(r, c));
+      cell.addEventListener('click', () => { insertTable(r, c); hideTablePicker(); });
+      grid.appendChild(cell);
     }
   }
+}
 
-  // ─── Open editor with card data ────────────────────
-  function openEditor(title, teacher, date, status, version) {
-    document.getElementById('editorDocTitle').textContent = title;
-    document.getElementById('editorTitleInput').value = title;
-    document.getElementById('sidebarTeacher').textContent = teacher;
-    document.getElementById('sidebarDate').textContent = date;
-    document.getElementById('sidebarVersion').textContent = 'Версия ' + version;
+function highlightPicker(rows, cols) {
+  _pickerRows = rows; _pickerCols = cols;
+  document.querySelectorAll('#tablePickerGrid div').forEach(cell => {
+    const r = +cell.dataset.r, c = +cell.dataset.c;
+    cell.style.background = (r <= rows && c <= cols) ? '#EBF1FD' : '';
+    cell.style.borderColor = (r <= rows && c <= cols) ? '#216CFF' : '#E4E4E4';
+  });
+  document.getElementById('tablePickerLabel').textContent = `${rows} × ${cols}`;
+}
 
-    const statusEl = document.getElementById('sidebarStatus');
-    statusEl.textContent = status;
-    statusEl.style.color = status === 'Завершено'
-      ? 'var(--color-success)'
-      : status === 'Ошибка'
-        ? 'var(--color-error)'
-        : 'var(--color-accent)';
+function hideTablePicker() {
+  document.getElementById('tablePicker').style.display = 'none';
+}
 
-    goTo('editor');
+function insertTable(rows, cols) {
+  let html = '<table class="editor-table"><tbody>';
+  for (let r = 0; r < rows; r++) {
+    html += '<tr>';
+    for (let c = 0; c < cols; c++) {
+      html += `<td contenteditable="true">${r === 0 ? '<strong>&nbsp;</strong>' : '&nbsp;'}</td>`;
+    }
+    html += '</tr>';
   }
+  html += '</tbody></table><p><br></p>';
+  edEl().focus();
+  document.execCommand('insertHTML', false, html);
+  // Make all table cells editable
+  edEl().querySelectorAll('.editor-table td, .editor-table th').forEach(cell => {
+    cell.contentEditable = 'true';
+  });
+}
+
+// ─── Table context menu ────────────────────────────────────
+let _ctxCell = null;
+
+document.addEventListener('contextmenu', e => {
+  const cell = e.target.closest('#editorContent td, #editorContent th');
+  if (cell) {
+    e.preventDefault();
+    _ctxCell = cell;
+    const menu = document.getElementById('tableCtxMenu');
+    menu.style.left = e.clientX + 'px';
+    menu.style.top = e.clientY + 'px';
+    menu.classList.add('open');
+  }
+});
+
+function closeCtxMenu() { document.getElementById('tableCtxMenu').classList.remove('open'); }
+
+function tableAction(action) {
+  if (!_ctxCell) return;
+  const row = _ctxCell.closest('tr');
+  const tbody = row.closest('tbody');
+  const table = row.closest('table');
+  const colIdx = Array.from(row.cells).indexOf(_ctxCell);
+
+  switch(action) {
+    case 'addRowAbove': {
+      const nr = row.cloneNode(true);
+      nr.querySelectorAll('td,th').forEach(c => { c.innerHTML = '&nbsp;'; c.contentEditable = 'true'; });
+      tbody.insertBefore(nr, row);
+      break;
+    }
+    case 'addRowBelow': {
+      const nr = row.cloneNode(true);
+      nr.querySelectorAll('td,th').forEach(c => { c.innerHTML = '&nbsp;'; c.contentEditable = 'true'; });
+      tbody.insertBefore(nr, row.nextSibling);
+      break;
+    }
+    case 'deleteRow':
+      if (tbody.rows.length > 1) row.remove();
+      break;
+    case 'addColLeft':
+      table.querySelectorAll('tr').forEach(r => {
+        const nc = document.createElement('td');
+        nc.innerHTML = '&nbsp;'; nc.contentEditable = 'true';
+        r.insertBefore(nc, r.cells[colIdx]);
+      });
+      break;
+    case 'addColRight':
+      table.querySelectorAll('tr').forEach(r => {
+        const nc = document.createElement('td');
+        nc.innerHTML = '&nbsp;'; nc.contentEditable = 'true';
+        const next = r.cells[colIdx + 1];
+        next ? r.insertBefore(nc, next) : r.appendChild(nc);
+      });
+      break;
+    case 'deleteCol':
+      table.querySelectorAll('tr').forEach(r => {
+        if (r.cells.length > 1 && r.cells[colIdx]) r.cells[colIdx].remove();
+      });
+      break;
+    case 'alignLeft': case 'alignCenter': case 'alignRight': {
+      const align = action.replace('align','').toLowerCase();
+      _ctxCell.style.textAlign = align;
+      break;
+    }
+  }
+  closeCtxMenu();
+}
+
+// ─── Search ────────────────────────────────────────────────
+let _searchMatches = [], _searchIdx = -1;
+
+function toggleSearch() {
+  const panel = document.getElementById('searchPanel');
+  const isOpen = panel.classList.contains('open');
+  if (isOpen) { closeSearch(); } else { panel.classList.add('open'); document.getElementById('searchInput').focus(); }
+  document.getElementById('btnSearchTool').classList.toggle('active', !isOpen);
+}
+
+function closeSearch() {
+  document.getElementById('searchPanel').classList.remove('open');
+  document.getElementById('btnSearchTool').classList.remove('active');
+  clearSearchHighlights();
+  document.getElementById('searchCount').textContent = '';
+}
+
+function doSearch() {
+  clearSearchHighlights();
+  _searchMatches = []; _searchIdx = -1;
+  const term = document.getElementById('searchInput').value.trim();
+  if (!term) { document.getElementById('searchCount').textContent = ''; return; }
+
+  const walker = document.createTreeWalker(edEl(), NodeFilter.SHOW_TEXT, {
+    acceptNode: n => n.parentElement.closest('.search-hl') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+  });
+  const nodes = [];
+  let n;
+  while (n = walker.nextNode()) nodes.push(n);
+
+  const lower = term.toLowerCase();
+  nodes.forEach(textNode => {
+    let text = textNode.textContent;
+    let idx = text.toLowerCase().indexOf(lower);
+    while (idx !== -1) {
+      const range = document.createRange();
+      range.setStart(textNode, idx);
+      range.setEnd(textNode, idx + term.length);
+      const mark = document.createElement('mark');
+      mark.className = 'search-hl';
+      try { range.surroundContents(mark); _searchMatches.push(mark); } catch(e) {}
+      // Refresh walker position after DOM mutation
+      idx = mark.nextSibling ? (mark.nextSibling.textContent || '').toLowerCase().indexOf(lower) : -1;
+      if (idx !== -1 && mark.nextSibling) {
+        // continue in next sibling
+        textNode = mark.nextSibling;
+        idx = textNode.textContent.toLowerCase().indexOf(lower);
+      } else break;
+    }
+  });
+
+  const count = _searchMatches.length;
+  if (count > 0) {
+    navigateSearch(1);
+    document.getElementById('searchCount').textContent = `1 из ${count}`;
+  } else {
+    document.getElementById('searchCount').textContent = 'Не найдено';
+  }
+}
+
+function navigateSearch(dir) {
+  if (!_searchMatches.length) return;
+  if (_searchIdx >= 0) _searchMatches[_searchIdx].classList.remove('current');
+  _searchIdx = (_searchIdx + dir + _searchMatches.length) % _searchMatches.length;
+  const cur = _searchMatches[_searchIdx];
+  cur.classList.add('current');
+  cur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('searchCount').textContent = `${_searchIdx + 1} из ${_searchMatches.length}`;
+}
+
+function searchKeyNav(e) {
+  if (e.key === 'Enter') { navigateSearch(e.shiftKey ? -1 : 1); e.preventDefault(); }
+  if (e.key === 'Escape') closeSearch();
+}
+
+function clearSearchHighlights() {
+  edEl().querySelectorAll('.search-hl').forEach(m => {
+    m.replaceWith(...m.childNodes);
+  });
+  _searchMatches = []; _searchIdx = -1;
+  // Normalize text nodes
+  edEl().normalize();
+}
+
+// ─── AI sidebar ────────────────────────────────────────────
+let _aiOpen = true;
+
+function toggleAI() {
+  _aiOpen = !_aiOpen;
+  document.getElementById('aiSidebar').classList.toggle('collapsed', !_aiOpen);
+  const strip = document.getElementById('rightToggle');
+  const aiRow = document.getElementById('toggleAIRow');
+  if (_aiOpen) {
+    strip.classList.replace('ai-closed', 'ai-open');
+    aiRow.classList.add('ai-active');
+  } else {
+    strip.classList.replace('ai-open', 'ai-closed');
+    aiRow.classList.remove('ai-active');
+  }
+}
+
+function aiPrompt(text) {
+  document.getElementById('aiInputField').value = text;
+  // Simulate sending
+  sendAiMessage();
+}
+
+function sendAiMessage() {
+  const input = document.getElementById('aiInputField');
+  const text = input.value.trim();
+  if (!text) return;
+  const messages = document.getElementById('aiMessages');
+  // Add user bubble
+  const userMsg = document.createElement('div');
+  userMsg.style.cssText = 'background:#EBF1FD;border-radius:12px 12px 4px 12px;padding:8px 12px;font-size:13px;color:#3C3C3C;margin-left:20%;margin-top:8px;line-height:1.4;';
+  userMsg.textContent = text;
+  messages.appendChild(userMsg);
+  // Simulate AI response
+  const aiMsg = document.createElement('div');
+  aiMsg.style.cssText = 'background:#F7F7F5;border:1px solid #E4E4E4;border-radius:12px 12px 12px 4px;padding:8px 12px;font-size:13px;color:#6B6B6B;margin-right:20%;margin-top:6px;line-height:1.4;';
+  aiMsg.textContent = 'Это прототип ИИ-помощника. В финальной версии здесь будет настоящий ответ на ваш запрос.';
+  setTimeout(() => { messages.appendChild(aiMsg); messages.scrollTop = messages.scrollHeight; }, 400);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// ─── Keyboard shortcuts ────────────────────────────────────
+document.addEventListener('keydown', e => {
+  const editorActive = document.getElementById('screen-editor').classList.contains('active');
+  if (!editorActive) return;
+
+  if (e.ctrlKey && !e.shiftKey) {
+    if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleSearch(); }
+    if (e.key === 'k' || e.key === 'K') { e.preventDefault(); insertLink(); }
+  }
+  if (e.ctrlKey && e.shiftKey && e.key === 'V') {
+    // Paste without formatting
+    e.preventDefault();
+    navigator.clipboard.readText().then(text => {
+      document.getElementById('editorContent').focus();
+      document.execCommand('insertText', false, text);
+    }).catch(() => { /* clipboard access denied */ });
+  }
+});
+
+// Intercept paste to offer options
+document.getElementById('editorContent').addEventListener('paste', e => {
+  // Allow default paste (with formatting). Ctrl+Shift+V handled above for plain text.
+});
+
+// ─── Version dropdown special handler ─────────────────────
+document.querySelector('.ed-btn-version').addEventListener('click', function(e) {
+  e.stopPropagation();
+  toggleDropdown('versionDropdown');
+});
 </script>
 </body>
 </html>
